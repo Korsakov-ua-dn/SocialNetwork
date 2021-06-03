@@ -1,20 +1,13 @@
 import React from 'react';
 import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from './ProfileInfo/ProfileInfo'
 
-const Profile = () => {
+const Profile = () => { 
     return (
-        <div className={s.content}>
+        <div>
             <div className={s.bg_img}/>
-            <div className={s.personal_wrapper}>
-                <div className={s.ava_img}/>
-                <div>
-                    <h3>Korsakov Oleg</h3>
-                    <p>Samurai Level 1</p>
-                    <p>sex: Male</p>
-                    <p>city: Donetsk</p>
-                </div>
-            </div>
+            <ProfileInfo avatar="url('https://avatars.mds.yandex.net/get-zen_doc/1570751/pub_5fa2a2525dc59845ddab2eb2_5fa2a4ab5dfc942ad768ab44/scale_1200')"/>
             <MyPosts/>
         </div>
     )

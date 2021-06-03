@@ -1,0 +1,12 @@
+.personal_wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: start;
+}
+.ava_img {
+    display: inline-flex;
+    width: 200px;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+}

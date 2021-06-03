@@ -1,23 +1,6 @@
-.content {
-    grid-area: c;
-    background-color: cadetblue;
-}
 .bg_img {
     height: 250px;
     background-image: url("./img/BG.jpg");
-    background-position: center;
-    background-size: cover;
-}
-.personal_wrapper {
-    display: flex;
-    align-items: flex-start;
-    justify-content: start;
-}
-.ava_img {
-    display: inline-flex;
-    width: 200px;
-    height: 200px;
-    background-image: url("https://avatars.mds.yandex.net/get-zen_doc/1570751/pub_5fa2a2525dc59845ddab2eb2_5fa2a4ab5dfc942ad768ab44/scale_1200");
     background-position: center;
     background-size: cover;
 }
