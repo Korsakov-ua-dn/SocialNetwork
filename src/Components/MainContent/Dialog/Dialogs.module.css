@@ -11,14 +11,15 @@
     color: gold;
 }
 
-.dialog {
-
+.dialog a {
+    color: azure;
+    text-decoration: none;
 }
 
 .messages {
     padding: 10px;
 }
 
-.messages .message {
+/* .messages .message {
 
-}
+} */

@@ -9,16 +9,16 @@ const Nav = () => {
                 <NavLink to='/profile' activeClassName={s.active}>Profile</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to='/dialogs' activeClassName={s.active}>Messages</NavLink>
+                <NavLink to='/dialogs' activeClassName={s.active}>Dialogs</NavLink>
             </div>
             <div className={s.item}>
-                <a href='#'>News</a>
+                <NavLink to='/news' activeClassName={s.active}>News</NavLink>
             </div>
             <div className={s.item}>
-                <a href='#'>Music</a>
+                <NavLink to='/music' activeClassName={s.active}>Music</NavLink>
             </div>
             <div className={s.item}>
-                <a href='#'>Settings</a>
+                <NavLink to='/settings' activeClassName={s.active}>Settings</NavLink>
             </div>
         </nav>
     )

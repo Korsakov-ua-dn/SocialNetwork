@@ -4,9 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
+let postsData = [
+  {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
+  {id: 2, message: "Do not lose hope!", likesCount: 0}
+]
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App postsData={postsData}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
