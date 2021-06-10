@@ -3,7 +3,7 @@ import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
 
-import { DialogItemType, MessageItem } from '../../../index';
+import { DialogItemType, MessageItem } from '../../../Redux/state';
 
 type DialogsPropsType = {
     dialogsData: Array<DialogItemType>

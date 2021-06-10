@@ -3,7 +3,7 @@ import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 
-import {PostType} from './../../../index';
+import {PostType} from './../../../Redux/state';
 
 export type PostsDataPropsType = {
     postsData: Array<PostType>

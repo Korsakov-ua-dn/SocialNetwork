@@ -13,6 +13,9 @@ const DialogItem = (props: DialogItemPropsType) => {
 
     return (
         <div className={s.dialog + ' ' + s.active}>
+            <div className={s.avatar} >
+                <img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg" alt="avatar" />
+            </div>
             <NavLink to={path}>{props.name}</NavLink>
         </div>
     )

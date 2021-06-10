@@ -3,54 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter as Router} from 'react-router-dom';
 
-
-let postsData = [
-  {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
-  {id: 2, message: "Do not lose hope!", likesCount: 0}
-]
-
-export type PostType = {
-  id: number
-  message: string
-  likesCount: number
-}
-
-let dialogsData = [
-  {id: 1, name: 'Oleg'},
-  {id: 2, name: 'Andrey'},
-  {id: 3, name: 'Vadim'},
-  {id: 4, name: 'Konstantin'},
-  {id: 5, name: 'Stepan'}
-]
-
-export type DialogsDataPropsType = {
-  dialogsData: Array<DialogItemType>
-}
-
-export type DialogItemType = {
-  id: number
-  name: string
-}
-
-
-let messagesData = [
-  {id: 1, message: 'Hi'},
-  {id: 2, message: 'How are your Kamasutra?'},
-  {id: 3, message: 'Yo bro, is good'}
-]
-
-export type MessagesDataPropsType = {
-  messagesData: Array<MessageItem>
-}
-export type MessageItem = {
-  id: number
-  message: string
-}
+import state from './Redux/state'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App postsData={postsData} dialogsData={dialogsData} messagesData={messagesData} />
+    <Router>
+      <App state={state} />
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
