@@ -27,5 +27,12 @@
 }
 
 .messages {
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.sendWrapper {
+    display: flex;
+    align-items: flex-end;
 }

@@ -3,11 +3,11 @@ import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
 
-import { DialogItemType, MessageItem } from '../../../Redux/state';
+import { DialogType, MessageType } from '../../../Redux/state';
 
 type DialogsPropsType = {
-    dialogsData: Array<DialogItemType>
-    messagesData: Array<MessageItem>
+    dialogsData: Array<DialogType>
+    messagesData: Array<MessageType>
 }
 
 
@@ -16,6 +16,14 @@ const Dialogs = (props: DialogsPropsType) => {
     let dialogItems = props.dialogsData.map( dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
     let messageItems = props.messagesData.map( m => <Message message={m.message} id={m.id}/>)
 
+    let newMessageRef = React.createRef<HTMLTextAreaElement>()
+    const sendMessage = () => {
+        if (newMessageRef.current) {
+            alert(newMessageRef.current.value)
+        }
+    }
+
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
@@ -23,6 +31,9 @@ const Dialogs = (props: DialogsPropsType) => {
             </div>
             <div className={s.messages}>
                 { messageItems }
+                <div className={s.sendWrapper}>
+                    <textarea ref={newMessageRef}/><button onClick={sendMessage}>send</button>
+                </div>
             </div>
         </div>
     )

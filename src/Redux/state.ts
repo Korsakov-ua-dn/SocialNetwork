@@ -1,20 +1,28 @@
-  export type PostType = {
-    id: number
-    message: string
-    likesCount: number
-  }
-  
-  export type DialogItemType = {
-    id: number
-    name: string
-  }
- 
-  export type MessageItem = {
-    id: number
-    message: string
-  }
+import {rerenderEntireTree} from '../render'
 
-let state = {
+export type PostType = {
+  id: number
+  message: string
+  likesCount: number
+}
+export type DialogType = {
+  id: number
+  name: string
+}
+export type MessageType = {
+  id: number
+  message: string
+}
+
+
+
+export type StateType = {
+  postsData: Array<PostType>
+  dialogsData: Array<DialogType>
+  messagesData: Array<MessageType>
+}
+
+export let state = {
 
     postsData: [
         {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
@@ -34,6 +42,17 @@ let state = {
         {id: 2, message: 'How are your Kamasutra?'},
         {id: 3, message: 'Yo bro, is good'}
     ]
+}
+ 
+export const addPost = (postText: string) => {
+  let newPost: PostType = {
+    id: new Date().getTime(),
+    message: postText,
+    likesCount: 0
+  }
+    state.postsData.push(newPost)
+    rerenderEntireTree(state)
+    
 }
 
 export default state
