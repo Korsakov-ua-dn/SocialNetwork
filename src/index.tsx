@@ -2,7 +2,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import {rerenderEntireTree} from './render'
-import {state} from './Redux/state'
+import state from './Redux/state'
 
 
 rerenderEntireTree(state)

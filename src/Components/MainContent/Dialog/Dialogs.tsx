@@ -3,18 +3,17 @@ import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
 
-import { DialogType, MessageType } from '../../../Redux/state';
+import { DialogPageType } from '../../../Redux/state';
 
 type DialogsPropsType = {
-    dialogsData: Array<DialogType>
-    messagesData: Array<MessageType>
+    dialogsPage: DialogPageType
 }
 
 
 const Dialogs = (props: DialogsPropsType) => {
 
-    let dialogItems = props.dialogsData.map( dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
-    let messageItems = props.messagesData.map( m => <Message message={m.message} id={m.id}/>)
+    let dialogItems = props.dialogsPage.dialogsData.map( dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
+    let messageItems = props.dialogsPage.messagesData.map( m => <Message message={m.message} id={m.id}/>)
 
     let newMessageRef = React.createRef<HTMLTextAreaElement>()
     const sendMessage = () => {
