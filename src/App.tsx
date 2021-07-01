@@ -9,13 +9,15 @@ import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
 import Dialogs from './Components/MainContent/Dialog/Dialogs'
 
-import state, { StateType, addPost, updateNewPostText, PostType, changeText } from './Redux/state';
+import { StoreType, PostType } from './Redux/state';
 
 type AppPropsType = {
-    state: StateType
+    store: StoreType
 }
 
-const App:React.FC<AppPropsType> = (props: AppPropsType) => {
+const App:React.FC<AppPropsType> = (props) => {
+    const state = props.store.getState()
+    debugger
 
     // let message = state.profilePage.postsData[0].message
 
@@ -25,11 +27,11 @@ const App:React.FC<AppPropsType> = (props: AppPropsType) => {
             <Nav/>
             <div className={s.app_wrapper_content}>
                 <Route path='/profile' render={ () => <Profile 
-                                            profilePage={props.state.profilePage}
-                                            addPost={addPost}
-                                            updateNewPostText={updateNewPostText}
+                                            profilePage={state.profilePage}
+                                            addPost={props.store.addPost.bind(props.store)}
+                                            updateNewPostText={props.store.updateNewPostText.bind(props.store)}
                                         /> }/>
-                <Route path='/dialogs' render={ () => <Dialogs dialogsPage={props.state.dialogsPage} /> }/>
+                <Route path='/dialogs' render={ () => <Dialogs dialogsPage={state.dialogsPage} /> }/>
                 <Route path='/news' component={News}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>
@@ -37,8 +39,8 @@ const App:React.FC<AppPropsType> = (props: AppPropsType) => {
             <Route path={'/hello'} render={() => <HelloMessage
                                             postData={state.profilePage.postsData   }
                                             message={state.profilePage.newPostText}
-                                            addPostCallBack={addPost}
-                                            changeTextCallback={changeText}
+                                            addPostCallBack={props.store.addPost.bind(props.store)}
+                                            changeTextCallback={props.store.changeText.bind(props.store)}
             /> } />
             {/* <Route path={'/hello'} render={() => <ByeMessage message={message} /> } /> */}
         </div>
