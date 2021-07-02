@@ -2,15 +2,14 @@ import React from 'react';
 // import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 
-import {ProfilePageType} from './../../../../Redux/state'
+import {ProfilePageType, ActionTypes, addPostAC, updateNewPostTextAC} from './../../../../Redux/state'
 
 type MyPostPropsType = {
     profilePage: ProfilePageType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionTypes) => void
 }
 
-const MyPosts = ({profilePage, addPost, updateNewPostText}: MyPostPropsType) => {
+const MyPosts = ({profilePage, dispatch}: MyPostPropsType) => {
 
     let postItems = profilePage.postsData.map( p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
@@ -18,14 +17,15 @@ const MyPosts = ({profilePage, addPost, updateNewPostText}: MyPostPropsType) => 
 
     const sendPost = () => {
         if (newPostItem.current) {
-            addPost()
+            dispatch(addPostAC())
         }
      }
 
      const onPostChangeHandler = () => {
         if (newPostItem.current) {
             let text = newPostItem.current.value
-            updateNewPostText(text)
+            // let action: ActionTypes = {type: "UPDATE-NEW-POST-TEXT", newText: text}
+            dispatch(updateNewPostTextAC(text))
         }
      }
 

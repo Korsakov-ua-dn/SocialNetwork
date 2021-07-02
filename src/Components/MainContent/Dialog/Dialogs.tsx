@@ -1,27 +1,28 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
 
-import { DialogPageType } from '../../../Redux/state';
+import { StoreType, changeMessageBodyAC, sendMessageAC } from '../../../Redux/state';
 
 type DialogsPropsType = {
-    dialogsPage: DialogPageType
+    store: StoreType
 }
-
 
 const Dialogs = (props: DialogsPropsType) => {
 
-    let dialogItems = props.dialogsPage.dialogsData.map( dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
-    let messageItems = props.dialogsPage.messagesData.map( m => <Message message={m.message} id={m.id}/>)
+    let localState = props.store.getState().dialogsPage
 
-    let newMessageRef = React.createRef<HTMLTextAreaElement>()
-    const sendMessage = () => {
-        if (newMessageRef.current) {
-            alert(newMessageRef.current.value)
-        }
+    let dialogItems = localState.dialogsData.map( dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
+    let messageItems = localState.messagesData.map( m => <Message message={m.message} id={m.id}/>)
+
+    const onSendMessageHandler = () => {
+        props.store.dispatch(sendMessageAC())
     }
-
+    const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let body = e.target.value
+        props.store.dispatch(changeMessageBodyAC(body))
+    }
 
     return (
         <div className={s.dialogs}>
@@ -29,9 +30,16 @@ const Dialogs = (props: DialogsPropsType) => {
                 { dialogItems }
             </div>
             <div className={s.messages}>
-                { messageItems }
+                <div>{ messageItems }</div>
                 <div className={s.sendWrapper}>
-                    <textarea ref={newMessageRef}/><button onClick={sendMessage}>send</button>
+                    <div><textarea
+                        value={localState.newMessageBody}
+                        placeholder='Enter message'
+                        onChange={onChangeMessageHandler} />
+                    </div>
+                    <div>
+                        <button onClick={onSendMessageHandler}>send</button>
+                    </div>
                 </div>
             </div>
         </div>
