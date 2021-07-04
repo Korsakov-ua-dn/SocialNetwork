@@ -1,3 +1,7 @@
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
+
 export type PostType = {
   id: number
   message: string
@@ -75,41 +79,12 @@ let store: StoreType = {
   },
 
   dispatch(action) {
-    switch(action.type) {
 
-      case "ADD-POST":
-        let newPost: PostType = {
-          id: new Date().getTime(),
-          message: this._state.profilePage.newPostText,
-          likesCount: 0
-        }
-        this._state.profilePage.postsData.push(newPost)
-        this._state.profilePage.newPostText = ""
-        this._rerenderEntireTree()
-        break;
+    this._state.profilePage = profileReducer(this._state.profilePage, action)
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+    this._rerenderEntireTree()
 
-      case "UPDATE-NEW-POST-TEXT":
-        this._state.profilePage.newPostText = action.newText
-        this._rerenderEntireTree()
-        break;
-
-      case "CHANGE-TEXT":
-        this._state.profilePage.newPostText = action.newText
-        this._rerenderEntireTree()
-        break;
-
-      case "CHANGE-MESSAGE-BODY":
-        this._state.dialogsPage.newMessageBody = action.body
-        this._rerenderEntireTree()
-        break;
-
-      case "SEND-MESSAGE":
-        let body = this._state.dialogsPage.newMessageBody
-        this._state.dialogsPage.newMessageBody = ''
-        this._state.dialogsPage.messagesData.push({id: 6, message: body})
-        this._rerenderEntireTree()
-        break;
-    }
   }
 }
 
