@@ -2,11 +2,12 @@ import React from 'react';
 // import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 
-import {ProfilePageType, ActionTypes, addPostAC, updateNewPostTextAC} from './../../../../Redux/state'
+import {ProfilePageType, AppActionTypes} from './../../../../Redux/redux-store'
+import {profileActions} from './../../../../Redux/profile-reducer'
 
 type MyPostPropsType = {
     profilePage: ProfilePageType
-    dispatch: (action: ActionTypes) => void
+    dispatch: (action: AppActionTypes) => void
 }
 
 const MyPosts = ({profilePage, dispatch}: MyPostPropsType) => {
@@ -17,7 +18,7 @@ const MyPosts = ({profilePage, dispatch}: MyPostPropsType) => {
 
     const sendPost = () => {
         if (newPostItem.current) {
-            dispatch(addPostAC())
+            dispatch(profileActions.addPostAC())
         }
      }
 
@@ -25,7 +26,7 @@ const MyPosts = ({profilePage, dispatch}: MyPostPropsType) => {
         if (newPostItem.current) {
             let text = newPostItem.current.value
             // let action: ActionTypes = {type: "UPDATE-NEW-POST-TEXT", newText: text}
-            dispatch(updateNewPostTextAC(text))
+            dispatch(profileActions.updateNewPostTextAC(text))
         }
      }
 

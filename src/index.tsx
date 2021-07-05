@@ -1,5 +1,5 @@
 import './index.css';
-import store from './Redux/state'
+import store from './Redux/redux-store'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -18,6 +18,7 @@ const rerenderEntireTree = () => {
 }
 
 rerenderEntireTree()
+
 store.subscribe(rerenderEntireTree)
 
 // If you want to start measuring performance in your app, pass a function

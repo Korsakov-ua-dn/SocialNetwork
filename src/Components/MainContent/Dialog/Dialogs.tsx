@@ -3,10 +3,11 @@ import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
 
-import { StoreType, changeMessageBodyAC, sendMessageAC } from '../../../Redux/state';
+import { AppStoreType} from '../../../Redux/redux-store';
+import { dialogsActions } from '../../../Redux/dialogs-reducer';
 
 type DialogsPropsType = {
-    store: StoreType
+    store: AppStoreType
 }
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -17,11 +18,11 @@ const Dialogs = (props: DialogsPropsType) => {
     let messageItems = localState.messagesData.map( m => <Message message={m.message} id={m.id}/>)
 
     const onSendMessageHandler = () => {
-        props.store.dispatch(sendMessageAC())
+        props.store.dispatch(dialogsActions.sendMessageAC())
     }
     const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value
-        props.store.dispatch(changeMessageBodyAC(body))
+        props.store.dispatch(dialogsActions.changeMessageBodyAC(body))
     }
 
     return (

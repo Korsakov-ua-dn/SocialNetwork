@@ -1,6 +1,14 @@
-import {PostType, ProfilePageType, ActionTypes,} from "./state";
+import {PostType, ProfilePageType, AppActionTypes} from "./redux-store";
 
-const profileReducer = (state: ProfilePageType, action: ActionTypes) => {
+let initialState = {
+    postsData: [
+      {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
+      {id: 2, message: "Do not lose hope!", likesCount: 0}
+    ],
+  newPostText: 'it-kamasutra.com'
+  }
+
+const profileReducer = (state: ProfilePageType = initialState, action: AppActionTypes) => {
 
     switch(action.type) {
 
@@ -27,5 +35,17 @@ const profileReducer = (state: ProfilePageType, action: ActionTypes) => {
 
     }
 }
+
+export const profileActions = {
+    addPostAC: () => ({type: "ADD-POST"} as const),
+    updateNewPostTextAC: (text: string) => ({type: "UPDATE-NEW-POST-TEXT", newText: text} as const),
+    changeTextAC:  (newText: string) => ({type: "CHANGE-TEXT", newText: newText} as const),
+}
+
+// export const addPostAC = () => ({type: "ADD-POST"}) as const
+// export const updateNewPostTextAC= (text: string) => ({type: "UPDATE-NEW-POST-TEXT", newText: text}) as const
+// export const changeTextAC = (newText: string) => ({type: "CHANGE-TEXT", newText: newText}) as const
+// export const changeMessageBodyAC = (body: string) => ({type: "CHANGE-MESSAGE-BODY", body: body}) as const
+// export const sendMessageAC = () => ({type: "SEND-MESSAGE"}) as const
 
 export default profileReducer;

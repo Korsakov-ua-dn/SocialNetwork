@@ -1,6 +1,22 @@
-import {DialogPageType, ActionTypes} from "./state";
+import {DialogPageType, AppActionTypes} from "./redux-store";
 
-const dialogsReducer = (state: DialogPageType, action: ActionTypes) => {
+let initialState = {
+    dialogsData: [
+      {id: 1, name: 'Oleg'},
+      {id: 2, name: 'Andrey'},
+      {id: 3, name: 'Vadim'},
+      {id: 4, name: 'Konstantin'},
+      {id: 5, name: 'Stepan'}
+    ],
+    messagesData:  [
+      {id: 1, message: 'Hi'},
+      {id: 2, message: 'How are your Kamasutra?'},
+      {id: 3, message: 'Yo bro, is good'}
+    ],
+    newMessageBody: ""
+  }
+
+const dialogsReducer = (state: DialogPageType = initialState, action: AppActionTypes) => {
 
     switch(action.type) {
 
@@ -18,6 +34,11 @@ const dialogsReducer = (state: DialogPageType, action: ActionTypes) => {
             return state;
 
     }
+}
+
+export const dialogsActions = {
+    changeMessageBodyAC:  (body: string) => ({type: "CHANGE-MESSAGE-BODY", body: body} as const),
+    sendMessageAC:  () => ({type: "SEND-MESSAGE"} as const),
 }
 
 export default dialogsReducer;

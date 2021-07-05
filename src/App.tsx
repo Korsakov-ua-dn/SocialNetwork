@@ -9,10 +9,12 @@ import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
 import Dialogs from './Components/MainContent/Dialog/Dialogs'
 
-import { StoreType, PostType, ActionTypes, changeTextAC, addPostAC } from './Redux/state';
+
+import {PostType, AppStoreType, AppActionTypes} from './Redux/redux-store';
+import {profileActions} from './Redux/profile-reducer';
 
 type AppPropsType = {
-    store: StoreType
+    store: AppStoreType
 }
 
 const App:React.FC<AppPropsType> = (props) => {
@@ -49,15 +51,15 @@ const App:React.FC<AppPropsType> = (props) => {
 type MessageType = {
     message: string
     postData: Array<PostType>
-    dispatch: (action: ActionTypes) => void 
+    dispatch: (action: AppActionTypes) => void 
 }
 
 function HelloMessage(props: MessageType) {
     const addPost = () => {
-        props.dispatch(addPostAC())
+        props.dispatch(profileActions.addPostAC())
     }
     
-    const onNewTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => props.dispatch(changeTextAC(e.currentTarget.value))
+    const onNewTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => props.dispatch(profileActions.changeTextAC(e.currentTarget.value))
 
     return (
         <div>
