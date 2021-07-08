@@ -7,7 +7,7 @@ import {Route} from 'react-router-dom';
 import News from './Components/MainContent/News/News'
 import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
-import Dialogs from './Components/MainContent/Dialog/Dialogs'
+import DialogsContainer from './Components/MainContent/Dialog/DialogsContainer'
 
 
 import {PostType, AppStoreType, AppActionTypes} from './Redux/redux-store';
@@ -28,10 +28,10 @@ const App:React.FC<AppPropsType> = (props) => {
             <Nav/>
             <div className={s.app_wrapper_content}>
                 <Route path='/profile' render={ () => <Profile 
-                                            profilePage={state.profilePage}
-                                            dispatch={props.store.dispatch.bind(props.store)}
+                                            store={props.store}
+                                            // dispatch={props.store.dispatch.bind(props.store)}
                                         /> }/>
-                <Route path='/dialogs' render={ () => <Dialogs
+                <Route path='/dialogs' render={ () => <DialogsContainer
                                             store={props.store}
                                         /> }/>
                 <Route path='/news' component={News}/>

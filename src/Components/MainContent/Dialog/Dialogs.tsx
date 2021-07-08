@@ -2,27 +2,27 @@ import React, { ChangeEvent } from 'react'
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
-
-import { AppStoreType} from '../../../Redux/redux-store';
-import { dialogsActions } from '../../../Redux/dialogs-reducer';
+import { MessageType, DialogType } from '../../../Redux/redux-store';
 
 type DialogsPropsType = {
-    store: AppStoreType
+    sendMessage: () => void
+    changeMessage: (body: string) => void
+    dialogsData: DialogType[]
+    messagesData: MessageType[]
+    newMessageBody: string
 }
 
 const Dialogs = (props: DialogsPropsType) => {
 
-    let localState = props.store.getState().dialogsPage
-
-    let dialogItems = localState.dialogsData.map( dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
-    let messageItems = localState.messagesData.map( m => <Message message={m.message} id={m.id}/>)
+    let dialogItems = props.dialogsData.map( dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
+    let messageItems = props.messagesData.map( m => <Message message={m.message} id={m.id}/>)
 
     const onSendMessageHandler = () => {
-        props.store.dispatch(dialogsActions.sendMessageAC())
+        props.sendMessage()
     }
     const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value
-        props.store.dispatch(dialogsActions.changeMessageBodyAC(body))
+        props.changeMessage(body)
     }
 
     return (
@@ -34,7 +34,7 @@ const Dialogs = (props: DialogsPropsType) => {
                 <div>{ messageItems }</div>
                 <div className={s.sendWrapper}>
                     <div><textarea
-                        value={localState.newMessageBody}
+                        value={props.newMessageBody}
                         placeholder='Enter message'
                         onChange={onChangeMessageHandler} />
                     </div>

@@ -16,7 +16,7 @@ let initialState = {
     newMessageBody: ""
   }
 
-const dialogsReducer = (state: DialogPageType = initialState, action: AppActionTypes) => {
+const dialogsReducer = (state: DialogPageType = initialState, action: AppActionTypes): DialogPageType => {
 
     switch(action.type) {
 

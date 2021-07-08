@@ -8,7 +8,7 @@ let initialState = {
   newPostText: 'it-kamasutra.com'
   }
 
-const profileReducer = (state: ProfilePageType = initialState, action: AppActionTypes) => {
+const profileReducer = (state: ProfilePageType = initialState, action: AppActionTypes): ProfilePageType => {
 
     switch(action.type) {
 
