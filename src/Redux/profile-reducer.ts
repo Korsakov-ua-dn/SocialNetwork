@@ -1,10 +1,17 @@
-import {PostType, ProfilePageType, AppActionTypes} from "./redux-store";
+import {AppActionTypes} from "./redux-store";
+
+export type PostDataType = {
+    id: number
+    message: string
+    likesCount: number
+}
+type ProfilePageType = typeof initialState
 
 let initialState = {
     postsData: [
       {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
       {id: 2, message: "Do not lose hope!", likesCount: 0}
-    ],
+    ] as Array<PostDataType>,
   newPostText: 'it-kamasutra.com'
   }
 
@@ -12,23 +19,29 @@ const profileReducer = (state: ProfilePageType = initialState, action: AppAction
 
     switch(action.type) {
 
-        case "ADD-POST":
-            let newPost: PostType = {
+        case "ADD-POST": 
+            let newPost: PostDataType = {
                 id: new Date().getTime(),
                 message: state.newPostText,
                 likesCount: 0
             }
-            state.postsData.push(newPost)
-            state.newPostText = ""
-            return state;
+            return {
+                ...state,
+                postsData: [...state.postsData, newPost],
+                newPostText: ''
+        }
 
         case "UPDATE-NEW-POST-TEXT":
-            state.newPostText = action.newText
-            return state;
+            return {
+                ...state,
+                newPostText: action.newText
+            }
 
         case "CHANGE-TEXT":
-            state.newPostText = action.newText
-            return state;
+            return {
+                ...state,
+                newPostText: action.newText
+            }
 
         default:
             return state;

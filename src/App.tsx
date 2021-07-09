@@ -8,17 +8,17 @@ import News from './Components/MainContent/News/News'
 import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
 import DialogsContainer from './Components/MainContent/Dialog/DialogsContainer'
+import { connect } from 'react-redux'
+import {Dispatch} from 'redux'
+import {profileActions, PostDataType} from './Redux/profile-reducer'
+import {AppStateType} from './Redux/redux-store';
 
+// type AppPropsType = {
+//     store: AppStoreType
+// }
 
-import {PostType, AppStoreType, AppActionTypes} from './Redux/redux-store';
-import {profileActions} from './Redux/profile-reducer';
-
-type AppPropsType = {
-    store: AppStoreType
-}
-
-const App:React.FC<AppPropsType> = (props) => {
-    const state = props.store.getState()
+const App = () => {
+    // const state = props.store.getState()
 
     // let message = state.profilePage.postsData[0].message
 
@@ -28,50 +28,70 @@ const App:React.FC<AppPropsType> = (props) => {
             <Nav/>
             <div className={s.app_wrapper_content}>
                 <Route path='/profile' render={ () => <Profile 
-                                            store={props.store}
+                                            // store={props.store}
                                             // dispatch={props.store.dispatch.bind(props.store)}
                                         /> }/>
                 <Route path='/dialogs' render={ () => <DialogsContainer
-                                            store={props.store}
+                                            // store={props.store}
                                         /> }/>
                 <Route path='/news' component={News}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>
             </div>
-            <Route path={'/hello'} render={() => <HelloMessage
-                                            postData={state.profilePage.postsData}
-                                            message={state.profilePage.newPostText}
-                                            dispatch={props.store.dispatch.bind(props.store)}
+            <Route path={'/hello'} render={() => <HelloMessageContainer
+                                            // postData={state.profilePage.postsData}
+                                            // message={state.profilePage.newPostText}
+                                            // dispatch={props.store.dispatch.bind(props.store)}
             /> } />
             {/* <Route path={'/bye'} render={() => <ByeMessage message={message} /> } /> */}
         </div>
     )
 }
 
-type MessageType = {
-    message: string
-    postData: Array<PostType>
-    dispatch: (action: AppActionTypes) => void 
-}
+function HelloMessage(props: HelloMessagePropsType) {
 
-function HelloMessage(props: MessageType) {
-    const addPost = () => {
-        props.dispatch(profileActions.addPostAC())
-    }
-    
-    const onNewTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => props.dispatch(profileActions.changeTextAC(e.currentTarget.value))
+    const onNewTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => props.changeText(e.currentTarget.value)
 
     return (
         <div>
-            {props.message}
+            {props.newPostText}
             <hr />
-                {props.postData.map( p => <div key={p.id}> <b>{p.message}</b> </div> )}
+                {props.postsData.map( p => <div key={p.id}> <b>{p.message}</b> </div> )}
             <hr />
-            <textarea value={props.message} onChange={onNewTextHandler} />
-            <button onClick={addPost} >add post</button>
+            <textarea value={props.newPostText} onChange={onNewTextHandler} />
+            <button onClick={props.addPost} >add post</button>
         </div>
     )
 }
+
+type mapStateToPropsType = {
+    postsData: PostDataType[]
+    newPostText: string
+}
+type mapDispatchToPropsType = {
+    changeText: (text: string) => void
+    addPost: () => void
+}
+export type HelloMessagePropsType = mapStateToPropsType & mapDispatchToPropsType
+
+let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+    return (
+        {
+            postsData: state.profilePage.postsData,
+            newPostText: state.profilePage.newPostText,
+        }
+    )   
+}
+let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+    return (
+        {
+            changeText: (text: string) => dispatch(profileActions.changeTextAC(text)),
+            addPost: () =>dispatch(profileActions.addPostAC()),
+        }
+    )
+}
+
+const HelloMessageContainer = connect(mapStateToProps, mapDispatchToProps)(HelloMessage)
 
 // const ByeMessage: React.FC<MessageType> = (props) => {
 //     return <h1>{props.message}</h1>

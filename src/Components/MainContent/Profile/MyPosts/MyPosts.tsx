@@ -1,17 +1,10 @@
 import React from 'react';
 // import s from './MyPosts.module.css';
 import Post from "./Post/Post";
+import {MyPostsPropsType} from './MyPostsContainer'
+// import { v1 } from 'uuid';
 
-import {PostType} from './../../../../Redux/redux-store'
-
-type MyPostPropsType = {
-    postsData: PostType[]
-    newPostText: string
-    onPostChange: (text: string) => void
-    addPost: () => void
-}
-
-const MyPosts = ({postsData, onPostChange, addPost, newPostText}: MyPostPropsType) => {
+const MyPosts = ({postsData, onPostChange, addPost, newPostText}: MyPostsPropsType) => {
 
     let postItems = postsData.map( p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
@@ -23,12 +16,12 @@ const MyPosts = ({postsData, onPostChange, addPost, newPostText}: MyPostPropsTyp
         }
     }
 
-     const onPostChangeHandler = () => {
+    const onPostChangeHandler = () => {
         if (newPostItem.current) {
             let text = newPostItem.current.value
             onPostChange(text)
         }
-     }
+    }
 
     return (
         <div>

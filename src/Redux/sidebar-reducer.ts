@@ -1,8 +1,10 @@
-import {SidebarType, AppActionTypes} from "./redux-store";
+import {AppActionTypes} from "./redux-store";
+
+type SidebarPageType = typeof initialState
 
 let initialState = {}
 
-const sidebarReducer = (state: SidebarType = initialState, action: AppActionTypes): SidebarType => {
+const sidebarReducer = (state: SidebarPageType = initialState, action: AppActionTypes): SidebarPageType => {
 
     return state;
 }
