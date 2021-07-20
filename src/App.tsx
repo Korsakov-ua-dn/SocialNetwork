@@ -3,7 +3,7 @@ import s from './App.module.css';
 import Header from "./Components/Header/Header";
 import Nav from "./Components/Nav/Nav";
 import Profile from "./Components/MainContent/Profile/Profile";
-import Users from './Components/MainContent/Users/Users';
+import UsersContainer from './Components/MainContent/Users/UsersContainer';
 import {Route} from 'react-router-dom';
 import News from './Components/MainContent/News/News'
 import Music from './Components/MainContent/Music/Music'
@@ -33,7 +33,7 @@ const App = () => {
                 <Route path='/dialogs' 
                        render={ () => <DialogsContainer /> }/>
                 <Route path='/users' 
-                       render={ () => <Users /> }/>
+                       render={ () => <UsersContainer /> }/>
                 <Route path='/news' component={News}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>
