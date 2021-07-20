@@ -3,6 +3,7 @@ import s from './App.module.css';
 import Header from "./Components/Header/Header";
 import Nav from "./Components/Nav/Nav";
 import Profile from "./Components/MainContent/Profile/Profile";
+import Users from './Components/MainContent/Users/Users';
 import {Route} from 'react-router-dom';
 import News from './Components/MainContent/News/News'
 import Music from './Components/MainContent/Music/Music'
@@ -27,13 +28,12 @@ const App = () => {
             <Header/>
             <Nav/>
             <div className={s.app_wrapper_content}>
-                <Route path='/profile' render={ () => <Profile 
-                                            // store={props.store}
-                                            // dispatch={props.store.dispatch.bind(props.store)}
-                                        /> }/>
-                <Route path='/dialogs' render={ () => <DialogsContainer
-                                            // store={props.store}
-                                        /> }/>
+                <Route path='/profile' 
+                       render={ () => <Profile /> }/>
+                <Route path='/dialogs' 
+                       render={ () => <DialogsContainer /> }/>
+                <Route path='/users' 
+                       render={ () => <Users /> }/>
                 <Route path='/news' component={News}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>

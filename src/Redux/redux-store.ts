@@ -1,6 +1,7 @@
 import {combineReducers, createStore} from 'redux'
 import profileReducer, {profileActions} from "./profile-reducer";
 import dialogsReducer, {dialogsActions} from "./dialogs-reducer";
+import {usersActions} from "./users-reducer"
 import sidebarReducer from "./sidebar-reducer";
 
 // export type PostType = {
@@ -30,7 +31,7 @@ export type SidebarType = {}
 type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
 export type InferActionTypes<T extends {[key: string]: (...args: any) => any} > = ReturnType<PropertiesTypes<T>>
 
-export const appActions = {...profileActions, ...dialogsActions}
+export const appActions = {...profileActions, ...dialogsActions, ...usersActions}
 
 export type AppActionTypes = InferActionTypes<typeof appActions>
 
