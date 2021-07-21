@@ -15,14 +15,7 @@ export type UserDataType = {
 export type UsersPageType = typeof initialState
 
 let initialState = {
-    users: [
-      {userId: 1, avatar: "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg",
-          follow: false, fullName: "Alex", status: "Typical Alex", location: {country: "Russia", city: "Moscow"}},
-      {userId: 2, avatar: "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg",
-          follow: true, fullName: "Bro", status: "A man", location: {country: "Ukraine", city: "Donetsk"}},
-      {userId: 3, avatar: "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg",
-          follow: true, fullName: "Dmitriy", status: "Crazy web developer", location: {country: "Belarus", city: "Minsk"}},
-    ] as Array<UserDataType>,
+    users: [] as Array<UserDataType>,
 }
 
 const usersReducer = (state: UsersPageType = initialState, action: AppActionTypes): UsersPageType => {
