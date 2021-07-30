@@ -11,6 +11,8 @@ type mapDispatchPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     setUsers: (users: Array<UserDataType>) => void
+    setUsersCurrentPage: (currentPage: number) => void
+    setTotalCount: (totalCount: number) => void
 }
 export type UsersPropsType = mapStatePropsType & mapDispatchPropsType
 
@@ -25,9 +27,10 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchPropsType => {
         follow: (userId: number) => dispatch(usersActions.followAC(userId)),
         unfollow: (userId: number) => dispatch(usersActions.unfollowAC(userId)),
         setUsers: (users: Array<UserDataType>) => dispatch(usersActions.setUsersAC(users)),
+        setUsersCurrentPage: (currentPage: number) => dispatch(usersActions.setUsersCurrentPageAC(currentPage)),
+        setTotalCount: (totalCount: number) => dispatch(usersActions.setTotalCountAC(totalCount))
     }
 }
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
 
-export default UsersContainer
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

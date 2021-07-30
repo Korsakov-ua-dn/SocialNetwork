@@ -11,3 +11,6 @@
     width: 100%;
     border-radius: 50%;
 }
+.selectedPage { 
+    font-weight: bold;
+}
