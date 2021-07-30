@@ -3,6 +3,33 @@ import Users from "./Users";
 import {AppStateType} from "../../../Redux/redux-store";
 import {Dispatch} from "redux";
 import {UserDataType, usersActions, UsersPageType} from "../../../Redux/users-reducer";
+import React from "react";
+import axios from "axios";
+
+class UsersContainer extends React.Component<UsersPropsType> {
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.usersPage.curentPage}&count=${this.props.usersPage.pageSize}`)
+            .then((response: any) => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalCount(response.data.totalCount)
+            });
+    }
+
+    onPageChanged = (p: number) => {
+        this.props.setUsersCurrentPage(p)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.usersPage.pageSize}`)
+            .then((response: any) => {
+                this.props.setUsers(response.data.items)
+            });
+    }
+    
+    render() {
+        return {
+            <Users />
+        } 
+    }
+}
 
 type mapStatePropsType = {
     usersPage:  UsersPageType
@@ -33,4 +60,4 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchPropsType => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
