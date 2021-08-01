@@ -6,13 +6,12 @@ const Users = (props: UsersPropsType) => {
 
     const state = props.usersPage
 
-        let pagesCount = Math.ceil(state.totalCount / state.pageSize)
-        let pages = []
+    let pagesCount = Math.ceil(state.totalCount / state.pageSize)
+    let pages = []
 
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i)
-        }
-
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+    }
 
     return (
         <div>
@@ -20,21 +19,27 @@ const Users = (props: UsersPropsType) => {
                 {
                     pages.map(p => <span
                         key={p}
-                        className={state.curentPage === p ? style.selectedPage : ""}
-                        // onClick={() => onPageChanged(p)}
+                        className={state.currentPage === p ? style.selectedPage : ""}
+                        onClick={() => props.onPageChanged(p)}
                     >{p} </span>)
                 }
             </div>
             {
                 state.users.map(u => <div key={u.id} className={style.userWrapper}>
                     <div>
-                        <div className={style.avatar}><img src={u.photos.small ? u.photos.small : avatar} alt="userAvatar"/></div>
+                        <div className={style.avatar}><img src={u.photos.small ? u.photos.small : avatar}
+                                                           alt="userAvatar"/></div>
                         {u.follow
-                            ? <button onClick={() => { props.unfollow(u.id) }} >UNFOLLOW</button>
-                            : <button onClick={() => { props.follow(u.id) }}>FOLLOW</button>}
+                            ? <button onClick={() => {
+                                props.unfollow(u.id)
+                            }}>UNFOLLOW</button>
+                            : <button onClick={() => {
+                                props.follow(u.id)
+                            }}>FOLLOW</button>}
                     </div>
                     <div>
-                        <div><span>{u.name}</span> <span>{'"u.location.country" + ", " + "u.location.city"'}</span></div>
+                        <div><span>{u.name}</span> <span>{'"u.location.country" + ", " + "u.location.city"'}</span>
+                        </div>
                         <span>{u.status}</span>
                     </div>
                 </div>)
