@@ -1,6 +1,7 @@
 import style from './Users.module.css'
 import avatar from '../../../assets/img/null-avatar-icon.jpg'
 import {UsersPageType} from '../../../Redux/users-reducer'
+import { NavLink } from 'react-router-dom'
 
 type UsersPropsType = {
     usersPage: UsersPageType
@@ -34,8 +35,11 @@ const Users = (props: UsersPropsType) => {
             {
                 state.users.map(u => <div key={u.id} className={style.userWrapper}>
                     <div>
-                        <div className={style.avatar}><img src={u.photos.small ? u.photos.small : avatar}
-                                                           alt="userAvatar"/></div>
+                        <div className={style.avatar}>
+                            <NavLink to={"/profile/" + u.id}>
+                                <img src={u.photos.small ? u.photos.small : avatar} alt="userAvatar"/>
+                            </NavLink>
+                        </div>
                         {u.follow
                             ? <button onClick={() => {
                                 props.unfollow(u.id)
@@ -45,7 +49,8 @@ const Users = (props: UsersPropsType) => {
                             }}>FOLLOW</button>}
                     </div>
                     <div>
-                        <div><span>{u.name}</span> <span>{'"u.location.country" + ", " + "u.location.city"'}</span>
+                        <div>
+                            <span>{u.name}</span> <span>{'"u.location.country" + ", " + "u.location.city"'}</span>
                         </div>
                         <span>{u.status}</span>
                     </div>

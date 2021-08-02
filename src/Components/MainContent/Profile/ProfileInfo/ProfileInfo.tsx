@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css';
 
 type ProfileInfoPropsType ={ 
     avatar: string
+    profile: any // need to fixed
 }
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {

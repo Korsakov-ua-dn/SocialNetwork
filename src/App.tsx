@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import s from './App.module.css';
 import Header from "./Components/Header/Header";
 import Nav from "./Components/Nav/Nav";
-import Profile from "./Components/MainContent/Profile/Profile";
+import ProfileContainer from "./Components/MainContent/Profile/ProfileContainer";
 import UsersContainer from './Components/MainContent/Users/UsersContainer';
 import {Route} from 'react-router-dom';
 import News from './Components/MainContent/News/News'
@@ -29,7 +29,7 @@ const App = () => {
             <Nav/>
             <div className={s.app_wrapper_content}>
                 <Route path='/profile' 
-                       render={ () => <Profile /> }/>
+                       render={ () => <ProfileContainer /> }/>
                 <Route path='/dialogs' 
                        render={ () => <DialogsContainer /> }/>
                 <Route path='/users' 
