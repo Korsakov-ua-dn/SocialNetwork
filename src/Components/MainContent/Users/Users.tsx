@@ -1,6 +1,13 @@
-import {UsersPropsType} from "./UsersContainer";
 import style from './Users.module.css'
 import avatar from '../../../assets/img/null-avatar-icon.jpg'
+import {UsersPageType} from '../../../Redux/users-reducer'
+
+type UsersPropsType = {
+    usersPage: UsersPageType
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    onPageChanged: (currentPage: number) => void
+}
 
 const Users = (props: UsersPropsType) => {
 

@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../../Redux/redux-store";
-import {Dispatch} from "redux";
+// import {Dispatch} from "redux";
 import {UserDataType, usersActions, UsersPageType} from "../../../Redux/users-reducer";
 import React from "react";
 import axios from "axios";
@@ -8,7 +8,7 @@ import Users from "./Users";
 import Preloader from "../../common/Preloader/Preloader"
 
 
-class UsersContainer extends React.Component<UsersPropsType> {
+class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
@@ -38,10 +38,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
                     usersPage={this.props.usersPage}
                     follow={this.props.follow}
                     unfollow={this.props.unfollow}
-                    setUsers={this.props.setUsers}
-                    onPageChanged={this.onPageChanged}
-                    setTotalCount={this.props.setTotalCount}
-                    toggleIsFetching={this.props.toggleIsFetching}/>
+                    onPageChanged={this.onPageChanged}/>
             </>
         )
     }
@@ -58,7 +55,7 @@ type mapDispatchPropsType = {
     setTotalCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
 }
-export type UsersPropsType = mapStatePropsType & mapDispatchPropsType
+export type UsersContainerPropsType = mapStatePropsType & mapDispatchPropsType
 
 const mapStateToProps = (state: AppStateType): mapStatePropsType => {
     return {
@@ -66,16 +63,11 @@ const mapStateToProps = (state: AppStateType): mapStatePropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): mapDispatchPropsType => {
-    return {
-        follow: (userId: number) => dispatch(usersActions.followAC(userId)),
-        unfollow: (userId: number) => dispatch(usersActions.unfollowAC(userId)),
-        setUsers: (users: Array<UserDataType>) => dispatch(usersActions.setUsersAC(users)),
-        onPageChanged: (currentPage: number) => dispatch(usersActions.setUsersCurrentPageAC(currentPage)),
-        setTotalCount: (totalCount: number) => dispatch(usersActions.setTotalCountAC(totalCount)),
-        toggleIsFetching: (isFetching: boolean) => dispatch(usersActions.toggleIsFetchingAC(isFetching)),
-    }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(mapStateToProps, {
+    follow: usersActions.followAC,
+    unfollow: usersActions.unfollowAC,
+    setUsers: usersActions.setUsersAC,
+    onPageChanged: usersActions.setUsersCurrentPageAC,
+    setTotalCount: usersActions.setTotalCountAC,
+    toggleIsFetching: usersActions.toggleIsFetchingAC,
+})(UsersContainer)
