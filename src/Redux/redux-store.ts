@@ -1,8 +1,9 @@
 import {combineReducers, createStore} from 'redux'
-import profileReducer, {profileActions} from "./profile-reducer";
-import dialogsReducer, {dialogsActions} from "./dialogs-reducer";
-import usersReducer, {usersActions} from "./users-reducer"
-import sidebarReducer from "./sidebar-reducer";
+import profileReducer, {profileActions} from './profile-reducer'
+import dialogsReducer, {dialogsActions} from './dialogs-reducer'
+import usersReducer, {usersActions} from './users-reducer'
+import sidebarReducer from './sidebar-reducer'
+import authReducer, {authActions} from './auth-reducer'
 
 // export type PostType = {
 //     id: number
@@ -31,7 +32,7 @@ export type SidebarType = {}
 type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
 export type InferActionTypes<T extends {[key: string]: (...args: any) => any} > = ReturnType<PropertiesTypes<T>>
 
-export const appActions = {...profileActions, ...dialogsActions, ...usersActions}
+export const appActions = {...profileActions, ...dialogsActions, ...usersActions, ...authActions}
 
 export type AppActionTypes = InferActionTypes<typeof appActions>
 
@@ -40,7 +41,8 @@ let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth: authReducer,
 });
 
 export type AppStateType = ReturnType< typeof rootReducer >

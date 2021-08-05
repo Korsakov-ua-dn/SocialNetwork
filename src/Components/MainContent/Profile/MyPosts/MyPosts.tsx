@@ -6,7 +6,7 @@ import {MyPostsPropsType} from './MyPostsContainer'
 
 const MyPosts = ({postsData, onPostChange, addPost, newPostText}: MyPostsPropsType) => {
 
-    let postItems = postsData.map( p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+    let postItems = postsData.map( p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let newPostItem = React.createRef<HTMLTextAreaElement>()
 

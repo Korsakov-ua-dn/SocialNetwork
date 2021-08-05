@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import s from './App.module.css';
-import Header from "./Components/Header/Header";
+import HeaderContainer from "./Components/Header/HeaderContainer";
 import Nav from "./Components/Nav/Nav";
 import ProfileContainer from "./Components/MainContent/Profile/ProfileContainer";
 import UsersContainer from './Components/MainContent/Users/UsersContainer';
@@ -14,21 +14,16 @@ import {Dispatch} from 'redux'
 import {profileActions, PostDataType} from './Redux/profile-reducer'
 import {AppStateType} from './Redux/redux-store';
 
-// type AppPropsType = {
-//     store: AppStoreType
-// }
-
 const App = () => {
-    // const state = props.store.getState()
 
     // let message = state.profilePage.postsData[0].message
 
     return (
         <div className={`${s.app_wrapper} container`}>
-            <Header/>
+            <HeaderContainer/>
             <Nav/>
             <div className={s.app_wrapper_content}>
-                <Route path='/profile' 
+                <Route path='/profile/:userId?' 
                        render={ () => <ProfileContainer /> }/>
                 <Route path='/dialogs' 
                        render={ () => <DialogsContainer /> }/>

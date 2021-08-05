@@ -1,3 +1,4 @@
+import { ProfileType } from "../Components/MainContent/Profile/ProfileContainer";
 import {AppActionTypes} from "./redux-store";
 
 export type PostDataType = {
@@ -13,7 +14,7 @@ let initialState = {
       {id: 2, message: "Do not lose hope!", likesCount: 0}
     ] as Array<PostDataType>,
     newPostText: 'it-kamasutra.com',
-    profile: null,
+    profile: null as ProfileType | null,
   }
 
 const profileReducer = (state: ProfilePageType = initialState, action: AppActionTypes): ProfilePageType => {
