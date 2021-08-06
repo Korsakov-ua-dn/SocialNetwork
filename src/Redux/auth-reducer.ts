@@ -3,9 +3,10 @@ import {AppActionTypes} from "./redux-store";
 export type AuthType = typeof initialState
 
 let initialState = {
-    id: null,
-    email: null,
-    login: null,
+    id: null as number| null,
+    email: null as string | null,
+    login: null as string | null,
+    isAuth: false
 }
 
 const authReducer = (state: AuthType = initialState, action: AppActionTypes): AuthType => {
@@ -14,7 +15,8 @@ const authReducer = (state: AuthType = initialState, action: AppActionTypes): Au
         case "SET_USER_DATA":
             return {
                 ...state,
-                ...action.data
+                ...action.data,
+                isAuth: true
             }
         default:
             return state;
@@ -22,7 +24,7 @@ const authReducer = (state: AuthType = initialState, action: AppActionTypes): Au
 }
 
 export const authActions = {
-    setUserDataAC: (data: AuthType) => ({type: "SET_USER_DATA", data} as const),
+    setUserDataAC: (id: number, email: string, login: string) => ({type: "SET_USER_DATA", data: {id, email, login}} as const),
 }
 
 export default authReducer;
