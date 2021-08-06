@@ -11,7 +11,7 @@ type PhotosType = {
 export type UserDataType = {
     id: number
     photos: PhotosType
-    follow: boolean
+    followed: boolean
     name: string
     status: string
     location: LocationType
@@ -32,12 +32,12 @@ const usersReducer = (state: UsersPageType = initialState, action: AppActionType
         case "FOLLOW":
             return {
                 ...state,
-                users: state.users.map(u => u.id !== action.userId ? u : {...u, follow: true})
+                users: state.users.map(u => u.id !== action.userId ? u : {...u, followed: true})
             }
         case "UNFOLLOW":
-            return {
+            return  {
                 ...state,
-                users: state.users.map(u => u.id !== action.userId ? u : {...u, follow: false})
+                users: state.users.map(u => u.id !== action.userId ? u : {...u, followed: false})
             }
         case "SET_USERS":
             return {...state, users: action.users}
