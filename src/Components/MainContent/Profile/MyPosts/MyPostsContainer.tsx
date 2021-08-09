@@ -1,7 +1,7 @@
 import MyPosts from './MyPosts'
 import {AppStateType} from '../../../../Redux/redux-store'
 import {profileActions, PostDataType} from '../../../../Redux/profile-reducer'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import {Dispatch} from 'redux'
 
 // type MyPostContainerPropsType = {
@@ -54,13 +54,13 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
             postsData: state.profilePage.postsData,
             newPostText: state.profilePage.newPostText,
         }
-    )   
+    )
 }
 let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     return (
         {
             onPostChange: (text: string) => dispatch(profileActions.updateNewPostTextAC(text)),
-            addPost: () =>dispatch(profileActions.addPostAC()),
+            addPost: () => dispatch(profileActions.addPostAC()),
         }
     )
 }

@@ -1,7 +1,7 @@
 import style from './Users.module.css'
 import avatar from '../../../assets/img/null-avatar-icon.jpg'
 import {UsersPageType} from '../../../Redux/users-reducer'
-import { NavLink } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import axios from 'axios'
 
 type UsersPropsType = {

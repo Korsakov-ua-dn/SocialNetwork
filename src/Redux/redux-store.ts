@@ -29,8 +29,8 @@ import authReducer, {authActions} from './auth-reducer'
 // }
 export type SidebarType = {}
 
-type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
-export type InferActionTypes<T extends {[key: string]: (...args: any) => any} > = ReturnType<PropertiesTypes<T>>
+type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never
+export type InferActionTypes<T extends { [key: string]: (...args: any) => any }> = ReturnType<PropertiesTypes<T>>
 
 export const appActions = {...profileActions, ...dialogsActions, ...usersActions, ...authActions}
 
@@ -45,7 +45,7 @@ let rootReducer = combineReducers({
     auth: authReducer,
 });
 
-export type AppStateType = ReturnType< typeof rootReducer >
+export type AppStateType = ReturnType<typeof rootReducer>
 
 let store = createStore(rootReducer);
 

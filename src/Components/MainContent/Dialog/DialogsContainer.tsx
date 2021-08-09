@@ -1,8 +1,8 @@
 import Dialogs from './Dialogs'
-import { AppStateType } from '../../../Redux/redux-store';
-import { dialogsActions, DialogType, MessageType } from '../../../Redux/dialogs-reducer';
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
+import {AppStateType} from '../../../Redux/redux-store';
+import {dialogsActions, DialogType, MessageType} from '../../../Redux/dialogs-reducer';
+import {Dispatch} from 'redux'
+import {connect} from 'react-redux'
 
 // type DialogsPropsType = {
 //     store: AppStateType
@@ -32,7 +32,7 @@ import { connect } from 'react-redux'
 //             }
 //         </StoreContext.Consumer>
 //     )
-    
+
 // }
 
 type mapStateToPropsType = {
@@ -53,7 +53,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
             messagesData: state.dialogsPage.messagesData,
             newMessageBody: state.dialogsPage.newMessageBody,
         }
-    )   
+    )
 }
 let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     return (

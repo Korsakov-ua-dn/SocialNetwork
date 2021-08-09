@@ -3,9 +3,9 @@
 // import sidebarReducer from "./sidebar-reducer";
 
 export type PostType = {
-  id: number
-  message: string
-  likesCount: number
+    id: number
+    message: string
+    likesCount: number
 }
 // export type DialogType = {
 //   id: number
@@ -55,7 +55,7 @@ export type PostType = {
 // //       ],
 // //     newPostText: 'it-kamasutra.com'
 // //     },
-  
+
 // //     dialogsPage: {
 // //       dialogsData: [
 // //         {id: 1, name: 'Oleg'},

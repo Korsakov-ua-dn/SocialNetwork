@@ -7,7 +7,7 @@ type PreloaderPropsType = {
 const Preloader = (props: PreloaderPropsType) => {
     return (
         <div>
-            {props.isFetching ? <img src={preloader} alt="spinner" /> : null}
+            {props.isFetching ? <img src={preloader} alt="spinner"/> : null}
         </div>
     )
 }

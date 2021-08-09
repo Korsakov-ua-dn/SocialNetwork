@@ -1,4 +1,4 @@
-import { ProfileType } from "../Components/MainContent/Profile/ProfileContainer";
+import {ProfileType} from "../Components/MainContent/Profile/ProfileContainer";
 import {AppActionTypes} from "./redux-store";
 
 export type PostDataType = {
@@ -10,18 +10,18 @@ type ProfilePageType = typeof initialState
 
 let initialState = {
     postsData: [
-      {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
-      {id: 2, message: "Do not lose hope!", likesCount: 0}
+        {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
+        {id: 2, message: "Do not lose hope!", likesCount: 0}
     ] as Array<PostDataType>,
     newPostText: 'it-kamasutra.com',
     profile: null as ProfileType | null,
-  }
+}
 
 const profileReducer = (state: ProfilePageType = initialState, action: AppActionTypes): ProfilePageType => {
 
-    switch(action.type) {
+    switch (action.type) {
 
-        case "ADD-POST": 
+        case "ADD-POST":
             let newPost: PostDataType = {
                 id: new Date().getTime(),
                 message: state.newPostText,
@@ -31,7 +31,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: AppAction
                 ...state,
                 postsData: [...state.postsData, newPost],
                 newPostText: ''
-        }
+            }
 
         case "UPDATE-NEW-POST-TEXT":
             return {
@@ -56,8 +56,8 @@ const profileReducer = (state: ProfilePageType = initialState, action: AppAction
 export const profileActions = {
     addPostAC: () => ({type: "ADD-POST"} as const),
     updateNewPostTextAC: (text: string) => ({type: "UPDATE-NEW-POST-TEXT", newText: text} as const),
-    changeTextAC:  (newText: string) => ({type: "CHANGE-TEXT", newText: newText} as const),
-    setUserProfileAC: (profile: any) => ({type: "SET_USER_PROFILE", profile}as const),
+    changeTextAC: (newText: string) => ({type: "CHANGE-TEXT", newText: newText} as const),
+    setUserProfileAC: (profile: any) => ({type: "SET_USER_PROFILE", profile} as const),
 }
 
 // export const addPostAC = () => ({type: "ADD-POST"}) as const

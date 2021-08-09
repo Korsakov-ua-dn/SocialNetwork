@@ -35,7 +35,7 @@ const usersReducer = (state: UsersPageType = initialState, action: AppActionType
                 users: state.users.map(u => u.id !== action.userId ? u : {...u, followed: true})
             }
         case "UNFOLLOW":
-            return  {
+            return {
                 ...state,
                 users: state.users.map(u => u.id !== action.userId ? u : {...u, followed: false})
             }

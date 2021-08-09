@@ -6,7 +6,7 @@ import {MyPostsPropsType} from './MyPostsContainer'
 
 const MyPosts = ({postsData, onPostChange, addPost, newPostText}: MyPostsPropsType) => {
 
-    let postItems = postsData.map( p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
+    let postItems = postsData.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let newPostItem = React.createRef<HTMLTextAreaElement>()
 
@@ -28,7 +28,7 @@ const MyPosts = ({postsData, onPostChange, addPost, newPostText}: MyPostsPropsTy
             <h3>My Posts</h3>
             <textarea ref={newPostItem} onChange={onPostChangeHandler} value={newPostText} placeholder='your news...'/>
             <button onClick={sendPost}>Send</button>
-            { postItems }
+            {postItems}
         </div>
     )
 }

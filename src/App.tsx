@@ -9,7 +9,7 @@ import News from './Components/MainContent/News/News'
 import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
 import DialogsContainer from './Components/MainContent/Dialog/DialogsContainer'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import {Dispatch} from 'redux'
 import {profileActions, PostDataType} from './Redux/profile-reducer'
 import {AppStateType} from './Redux/redux-store';
@@ -23,21 +23,21 @@ const App = () => {
             <HeaderContainer/>
             <Nav/>
             <div className={s.app_wrapper_content}>
-                <Route path='/profile/:userId?' 
-                       render={ () => <ProfileContainer /> }/>
-                <Route path='/dialogs' 
-                       render={ () => <DialogsContainer /> }/>
-                <Route path='/users' 
-                       render={ () => <UsersContainer /> }/>
+                <Route path='/profile/:userId?'
+                       render={() => <ProfileContainer/>}/>
+                <Route path='/dialogs'
+                       render={() => <DialogsContainer/>}/>
+                <Route path='/users'
+                       render={() => <UsersContainer/>}/>
                 <Route path='/news' component={News}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>
             </div>
             <Route path={'/hello'} render={() => <HelloMessageContainer
-                                            // postData={state.profilePage.postsData}
-                                            // message={state.profilePage.newPostText}
-                                            // dispatch={props.store.dispatch.bind(props.store)}
-            /> } />
+                // postData={state.profilePage.postsData}
+                // message={state.profilePage.newPostText}
+                // dispatch={props.store.dispatch.bind(props.store)}
+            />}/>
             {/* <Route path={'/bye'} render={() => <ByeMessage message={message} /> } /> */}
         </div>
     )
@@ -50,11 +50,11 @@ function HelloMessage(props: HelloMessagePropsType) {
     return (
         <div>
             {props.newPostText}
-            <hr />
-                {props.postsData.map( p => <div key={p.id}> <b>{p.message}</b> </div> )}
-            <hr />
-            <textarea value={props.newPostText} onChange={onNewTextHandler} />
-            <button onClick={props.addPost} >add post</button>
+            <hr/>
+            {props.postsData.map(p => <div key={p.id}><b>{p.message}</b></div>)}
+            <hr/>
+            <textarea value={props.newPostText} onChange={onNewTextHandler}/>
+            <button onClick={props.addPost}>add post</button>
         </div>
     )
 }
@@ -75,13 +75,13 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
             postsData: state.profilePage.postsData,
             newPostText: state.profilePage.newPostText,
         }
-    )   
+    )
 }
 let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     return (
         {
             changeText: (text: string) => dispatch(profileActions.changeTextAC(text)),
-            addPost: () =>dispatch(profileActions.addPostAC()),
+            addPost: () => dispatch(profileActions.addPostAC()),
         }
     )
 }

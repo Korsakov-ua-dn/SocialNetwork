@@ -5,13 +5,13 @@ import ProfileInfo from './ProfileInfo/ProfileInfo'
 import {ProfileContainerPropsType} from './ProfileContainer'
 
 const Profile = (props: ProfileContainerPropsType) => {
-        return (
+    return (
         <div>
             <div className={s.bg_img}/>
-            <ProfileInfo 
+            <ProfileInfo
                 avatar="url('https://avatars.mds.yandex.net/get-zen_doc/1570751/pub_5fa2a2525dc59845ddab2eb2_5fa2a4ab5dfc942ad768ab44/scale_1200')"
-                profile={props.profile} />
-            <MyPostsContainer />
+                profile={props.profile}/>
+            <MyPostsContainer/>
         </div>
     )
 }

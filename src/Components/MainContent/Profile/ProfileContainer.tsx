@@ -1,10 +1,10 @@
 import React from 'react';
 import Profile from './Profile'
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {AppStateType} from '../../../Redux/redux-store'
 import axios from "axios";
 import {profileActions} from '../../../Redux/profile-reducer'
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {RouteComponentProps} from "react-router";
 
 class ProfileContainer extends React.Component<PropsType> {

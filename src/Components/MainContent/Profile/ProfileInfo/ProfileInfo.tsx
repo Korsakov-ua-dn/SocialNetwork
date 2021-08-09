@@ -2,7 +2,7 @@ import React from 'react';
 import Preloader from '../../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
 
-type ProfileInfoPropsType ={ 
+type ProfileInfoPropsType = {
     avatar: string
     profile: any // need to fixed
 }
@@ -18,7 +18,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
         const avatarStyle = {
             backgroundImage: photo ? `url(${photo})` : props.avatar
         }
-    
+
         return (
             <div className={s.personal_wrapper}>
                 <div style={avatarStyle} className={s.ava_img}/>
