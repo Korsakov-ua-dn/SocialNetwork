@@ -20,11 +20,14 @@ export const userApi = {
     follow(id: number) {
         return instance.post(`follow/${id}`)
             .then(response => response.data)
-    }
+    },
+    getProfile(userId: string) {
+        return instance.get(`profile/` + userId)
+    },
 }
 
 export const authApi = {
-    authMe(userId: string) {
-        return instance.get(`profile/` + userId)
-    }
+    authMe() {
+        return instance.get(`auth/me`)
+    },
 }

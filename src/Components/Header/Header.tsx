@@ -11,9 +11,9 @@ const Header = (props: HeaderContainerPropsType) => {
                 alt=""/>
             <div className={s.loginBlock}>
                 {
-                    props.auth.isAuth ?
-                        props.auth.login :
-                        <NavLink to={'/login'}>Login</NavLink>
+                    props.auth.isAuth 
+                    ? props.auth.login 
+                    : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>
         </header>

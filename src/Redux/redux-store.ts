@@ -1,9 +1,10 @@
-import {combineReducers, createStore} from 'redux'
+import {applyMiddleware, combineReducers, createStore} from 'redux'
 import profileReducer, {profileActions} from './profile-reducer'
 import dialogsReducer, {dialogsActions} from './dialogs-reducer'
 import usersReducer, {usersActions} from './users-reducer'
 import sidebarReducer from './sidebar-reducer'
-import authReducer, {authActions} from './auth-reducer'
+import authReducer, {setUserDataAC} from './auth-reducer'
+import ThunkMiddleware from 'redux-thunk'
 
 // export type PostType = {
 //     id: number
@@ -26,13 +27,13 @@ import authReducer, {authActions} from './auth-reducer'
 //     dialogsData: Array<DialogType>
 //     messagesData: Array<MessageType>
 //     newMessageBody: string
-// }
+// }    
 export type SidebarType = {}
 
 type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never
 export type InferActionTypes<T extends { [key: string]: (...args: any) => any }> = ReturnType<PropertiesTypes<T>>
 
-export const appActions = {...profileActions, ...dialogsActions, ...usersActions, ...authActions}
+export const appActions = {...profileActions, ...dialogsActions, ...usersActions, setUserDataAC}
 
 export type AppActionTypes = InferActionTypes<typeof appActions>
 
@@ -47,7 +48,7 @@ let rootReducer = combineReducers({
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-let store = createStore(rootReducer);
+let store = createStore(rootReducer, applyMiddleware(ThunkMiddleware));
 
 // window.store = store
 
