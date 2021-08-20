@@ -1,6 +1,7 @@
-import React from 'react';
-import Preloader from '../../../common/Preloader/Preloader';
-import s from './ProfileInfo.module.css';
+import React from 'react'
+import Preloader from '../../../common/Preloader/Preloader'
+import s from './ProfileInfo.module.css'
+import ProfileStatus from './ProfileStatus'
 
 type ProfileInfoPropsType = {
     avatar: string
@@ -24,6 +25,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <div style={avatarStyle} className={s.ava_img}/>
                 <div>
                     <h3>Korsakov Oleg</h3>
+                    <ProfileStatus status={"yoyo"}/>
                     <p>Samurai Level 1</p>
                     <p>sex: Male</p>
                     <p>city: Donetsk</p>

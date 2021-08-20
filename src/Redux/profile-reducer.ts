@@ -8,13 +8,13 @@ export type PostDataType = {
     likesCount: number
 }
 type ContactType = {
-    facebook: string
-    github: string
-    instagram: string
+    facebook: string | null
+    github: string | null
+    instagram: string | null
     mainLink: string | null
-    twitter: string
-    vk: string
-    website: string
+    twitter: string | null
+    vk: string | null
+    website: string | null
     youtube: string | null
 }
 type PhotosType = {
@@ -22,10 +22,10 @@ type PhotosType = {
     large: string
 }
 export type ProfileType = {
-    aboutMe: string
+    aboutMe: string | null
     userId: number
     lookingForAJob: boolean
-    lookingForAJobDescription: string
+    lookingForAJobDescription: string | null
     fullName: string
     contacts: ContactType
     photos: PhotosType

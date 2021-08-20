@@ -19,7 +19,7 @@ export function WithAuthRedirect <WrappedComponentPropsType>(Component: React.Co
 
     }
 
-    let ConnectedAuthRedirectComponent = connect<MapStateToProps, {}, WrappedComponentPropsType, AppStateType>(mapStateToProps)(RedirectComponent)
+    // let ConnectedAuthRedirectComponent = 
 
-    return ConnectedAuthRedirectComponent
+    return connect<MapStateToProps, {}, WrappedComponentPropsType, AppStateType>(mapStateToProps)(RedirectComponent)
 } // не работает со стрелочной функцией, as unknown - вроде можно не писать
