@@ -42,7 +42,20 @@ export const userApi = {
             .then(response => response.data)
     },
     getProfile(userId: string) {
+        console.warn("Please use profileApi to make this request");
+        return profileApi.getProfile(userId)
+    },
+}
+
+export const profileApi = {
+    getProfile(userId: string) {
         return instance.get<ProfileType>(`profile/${userId}`)
+    },
+    getStatus(userId: string) {
+        return instance.get(`/profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+        return instance.put(`/profile/status`, {"status": status})
     },
 }
 
