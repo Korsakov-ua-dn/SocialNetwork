@@ -5,6 +5,7 @@ import usersReducer, {usersActions} from './users-reducer'
 import sidebarReducer from './sidebar-reducer'
 import authReducer, {setUserDataAC} from './auth-reducer'
 import ThunkMiddleware from 'redux-thunk'
+import { reducer as formReducer } from 'redux-form'
 
 // export type PostType = {
 //     id: number
@@ -44,6 +45,7 @@ let rootReducer = combineReducers({
     sidebar: sidebarReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    form: formReducer, // redux-form state
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>

@@ -9,7 +9,7 @@ import News from './Components/MainContent/News/News'
 import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
 import DialogsContainer from './Components/MainContent/Dialog/DialogsContainer'
-import Login from './Components/Login/Login'
+import LoginContainer from './Components/Login/Login'
 
 const App = () => {
 
@@ -28,7 +28,7 @@ const App = () => {
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>
                 <Route path='/login'
-                       render={() => <Login />} />
+                       render={() => <LoginContainer />} />
             </div>
         </div>
     )
