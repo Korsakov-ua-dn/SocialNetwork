@@ -40,11 +40,9 @@ import {Dispatch} from 'redux'
 
 type mapStateToPropsType = {
     postsData: PostDataType[]
-    newPostText: string
 }
 type mapDispatchToPropsType = {
-    onPostChange: (text: string) => void
-    addPost: () => void
+    addPost: (newPostText: string) => void
 }
 export type MyPostsPropsType = mapStateToPropsType & mapDispatchToPropsType
 
@@ -52,15 +50,13 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return (
         {
             postsData: state.profilePage.postsData,
-            newPostText: state.profilePage.newPostText,
         }
     )
 }
 let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     return (
         {
-            onPostChange: (text: string) => dispatch(profileActions.updateNewPostTextAC(text)),
-            addPost: () => dispatch(profileActions.addPostAC()),
+            addPost: (newPostText: string) => dispatch(profileActions.addPostAC(newPostText)),
         }
     )
 }

@@ -37,7 +37,6 @@ let initialState = {
         {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
         {id: 2, message: "Do not lose hope!", likesCount: 0}
     ] as Array<PostDataType>,
-    newPostText: "it-kamasutra.com",
     profile: null as ProfileType | null,
     status: ""
 }
@@ -49,18 +48,17 @@ const profileReducer = (state: ProfilePageType = initialState, action: AppAction
         case "ADD-POST":
             let newPost: PostDataType = {
                 id: new Date().getTime(),
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
             return {
                 ...state,
                 postsData: [...state.postsData, newPost],
-                newPostText: ''
             }
-        case "UPDATE-NEW-POST-TEXT":
-            return {...state, newPostText: action.newText}
-        case "CHANGE-TEXT":
-            return { ...state, newPostText: action.newText}
+        // case "UPDATE-NEW-POST-TEXT":
+        //     return {...state, newPostText: action.newText}
+        // case "CHANGE-TEXT":
+        //     return { ...state, newPostText: action.newText}
         case "SET_USER_PROFILE":
             return {...state, profile: action.profile}
         case "SET_STATUS":
@@ -72,9 +70,9 @@ const profileReducer = (state: ProfilePageType = initialState, action: AppAction
 }
 
 export const profileActions = {
-    addPostAC: () => ({type: "ADD-POST"} as const),
-    updateNewPostTextAC: (text: string) => ({type: "UPDATE-NEW-POST-TEXT", newText: text} as const),
-    changeTextAC: (newText: string) => ({type: "CHANGE-TEXT", newText} as const),
+    addPostAC: (newPostText: string) => ({type: "ADD-POST", newPostText} as const),
+    // updateNewPostTextAC: (text: string) => ({type: "UPDATE-NEW-POST-TEXT", newText: text} as const),
+    // changeTextAC: (newText: string) => ({type: "CHANGE-TEXT", newText} as const),
     setUserProfileAC: (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile} as const),
     setStatusAC: (status: string) => ({type: "SET_STATUS", status} as const),
 }

@@ -23,7 +23,6 @@ let initialState = {
         {id: 2, message: 'How are your Kamasutra?'},
         {id: 3, message: 'Yo bro, is good'}
     ] as Array<MessageType>,
-    newMessageBody: ""
 }
 
 const dialogsReducer = (state: DialogPageType = initialState, action: AppActionTypes): DialogPageType => {
@@ -31,18 +30,10 @@ const dialogsReducer = (state: DialogPageType = initialState, action: AppActionT
 
     switch (action.type) {
 
-        case "CHANGE-MESSAGE-BODY":
-            return {
-                ...state,
-                newMessageBody: action.body
-            }
-
         case "SEND-MESSAGE":
-            let body = state.newMessageBody
             return {
                 ...state,
-                newMessageBody: '',
-                messagesData: [...state.messagesData, {id: 6, message: body}]
+                messagesData: [...state.messagesData, {id: 6, message: action.newMessageBody}]
             }
 
         default:
@@ -52,8 +43,7 @@ const dialogsReducer = (state: DialogPageType = initialState, action: AppActionT
 }
 
 export const dialogsActions = {
-    changeMessageBodyAC: (body: string) => ({type: "CHANGE-MESSAGE-BODY", body: body} as const),
-    sendMessageAC: () => ({type: "SEND-MESSAGE"} as const),
+    sendMessageAC: (newMessageBody: string) => ({type: "SEND-MESSAGE", newMessageBody} as const),
 }
 
 export default dialogsReducer;
