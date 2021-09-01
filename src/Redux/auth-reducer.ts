@@ -30,16 +30,23 @@ export const setUserDataAC = (id: number, email: string, login: string) => ({
     data: {id, email, login}
 } as const)
 
-export const getAuthUserData = () => {
-    return (dispatch: Dispatch) => {
-        authApi.authMe()
+export const getAuthUserData = () => (dispatch: Dispatch) => {
+    authApi.authMe()
         .then(responce => {
             if (responce.data.resultCode === 0) {
                 let {id, email, login} = responce.data.data
                 dispatch(setUserDataAC(id, email, login))
             }
         })
-    }
+}
+
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+    authApi.login(email, password, rememberMe)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            }
+        })
 }
 
 
