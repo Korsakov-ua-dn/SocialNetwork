@@ -22,7 +22,7 @@ type UnfollowFollowType = {
     resultCode: number
 }
 type AuthMeType = {
-    data: {id: number, login: string, email: string}
+    data: { id: number, login: string, email: string }
     fieldsErrors: []
     messages: []
     resultCode: number
@@ -64,7 +64,7 @@ export const authApi = {
         return instance.get<AuthMeType>(`auth/me`)
     },
     login(email: string, password: string, rememberMe: boolean) {
-        return instance.post(`/auth/login`, {email, password, rememberMe})
+        return instance.post(`/auth/login`, {"email": email, "password": password, "rememberMe": rememberMe})
     },
     logout() {
         return instance.delete(`/auth/login`)
