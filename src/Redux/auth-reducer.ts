@@ -1,6 +1,5 @@
-import {AppActionTypes} from "./redux-store";
+import {AppActionTypes, AppThunkTypes} from "./redux-store";
 import {authApi} from '../API/api'
-import {Dispatch} from "redux";
 
 export type AuthType = typeof initialState
 
@@ -29,7 +28,7 @@ export const setUserDataAC = (id: number | null, email: string| null, login: str
     preloader: {id, email, login, isAuth}
 } as const)
 
-export const getAuthUserData = () => (dispatch: Dispatch) => {
+export const getAuthUserData = (): AppThunkTypes => dispatch => {
     authApi.authMe()
         .then(responce => {
             if (responce.data.resultCode === 0) {
@@ -39,7 +38,23 @@ export const getAuthUserData = () => (dispatch: Dispatch) => {
         })
 }
 
-export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+export const login = (email: string, password: string, rememberMe: boolean): AppThunkTypes => async dispatch => {
+    try {
+        const res = await authApi.login(email, password, rememberMe)
+        console.log(res)
+        dispatch(getAuthUserData())
+    } catch (e) {
+        throw new Error(e)
+    }
+}
+export const logout = (): AppThunkTypes => async dispatch => {
+    const res = await authApi.logout()
+    if (res.data.resultCode === 0) {
+        dispatch(setUserDataAC(null, null, null, false))
+    }
+}
+
+export const _login = (email: string, password: string, rememberMe: boolean): AppThunkTypes => dispatch => {
     authApi.login(email, password, rememberMe)
         .then(res => {
             if (res.data.resultCode === 0) {
@@ -47,14 +62,15 @@ export const login = (email: string, password: string, rememberMe: boolean) => (
                 dispatch(getAuthUserData())
             }
         })
-}
-export const logout = () => (dispatch: any) => {
+} // Санка посттроенная на promise .then
+
+export const _logout = (): AppThunkTypes => dispatch => {
     authApi.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setUserDataAC(null, null, null, false))
             }
         })
-}
+} // Санка посттроенная на promise .then
 
 export default authReducer;
