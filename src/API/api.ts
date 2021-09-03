@@ -10,23 +10,6 @@ const instance = axios.create({
     },
 })
 
-type GetUsersType = {
-    error: null | string
-    items: UserDataType[]
-    totalCount: number
-}
-type UnfollowFollowType = {
-    data: {}
-    fieldsErrors: []
-    messages: []
-    resultCode: number
-}
-type AuthMeType = {
-    data: { id: number, login: string, email: string }
-    fieldsErrors: []
-    messages: []
-    resultCode: number
-}
 
 export const userApi = {
     getUsers(currentPage: number, pageSize: number) {
@@ -34,11 +17,11 @@ export const userApi = {
             .then(response => response.data)
     },
     unfollow(id: number) {
-        return instance.delete<UnfollowFollowType>(`follow/${id}`)
+        return instance.delete<CommonType>(`follow/${id}`)
             .then(response => response.data)
     },
     follow(id: number) {
-        return instance.post<UnfollowFollowType>(`follow/${id}`)
+        return instance.post<CommonType>(`follow/${id}`)
             .then(response => response.data)
     },
     getProfile(userId: string) {
@@ -61,12 +44,27 @@ export const profileApi = {
 
 export const authApi = {
     authMe() {
-        return instance.get<AuthMeType>(`auth/me`)
+        return instance.get<CommonType<{ id: number, login: string, email: string }>>(`auth/me`)
     },
     login(email: string, password: string, rememberMe: boolean) {
-        return instance.post(`/auth/login`, {"email": email, "password": password, "rememberMe": rememberMe})
+        return instance.post<CommonType<{userId: number}>>(`/auth/login`, {"email": email, "password": password, "rememberMe": rememberMe})
     },
     logout() {
-        return instance.delete(`/auth/login`)
+        return instance.delete<CommonType>(`/auth/login`)
     },
+}
+
+
+// types
+type GetUsersType = {
+    error: null | string
+    items: UserDataType[]
+    totalCount: number
+}
+
+type CommonType<T = {}> = {
+    data: T
+    messages: []
+    fieldsErrors: []
+    resultCode: number
 }

@@ -1,7 +1,6 @@
-import {AppActionTypes, AppThunkTypes} from "./redux-store";
+import {AppThunkTypes} from './redux-store'
 import {authApi} from '../API/api'
-
-export type AuthType = typeof initialState
+import { stopSubmit } from 'redux-form'
 
 let initialState = {
     id: null as number | null,
@@ -10,24 +9,23 @@ let initialState = {
     isAuth: false
 }
 
-const authReducer = (state: AuthType = initialState, action: AppActionTypes): AuthType => {
-
+const authReducer = (state: AuthType = initialState, action: AuthActionsType): AuthType => {
     switch (action.type) {
         case "SET_USER_DATA":
             return {
                 ...state,
-                ...action.preloader,
+                ...action.payload,
             }
         default:
             return state;
     }
 }
 
-export const setUserDataAC = (id: number | null, email: string| null, login: string| null, isAuth: boolean) => ({
-    type: "SET_USER_DATA",
-    preloader: {id, email, login, isAuth}
-} as const)
+// actions
+export const setUserDataAC = (id: number | null, email: string| null, login: string| null, isAuth: boolean) => 
+    ({type: "SET_USER_DATA", payload: {id, email, login, isAuth}} as const)
 
+// thunks
 export const getAuthUserData = (): AppThunkTypes => dispatch => {
     authApi.authMe()
         .then(responce => {
@@ -37,13 +35,20 @@ export const getAuthUserData = (): AppThunkTypes => dispatch => {
             }
         })
 }
-
 export const login = (email: string, password: string, rememberMe: boolean): AppThunkTypes => async dispatch => {
+
     try {
+        debugger
         const res = await authApi.login(email, password, rememberMe)
-        console.log(res)
-        dispatch(getAuthUserData())
-    } catch (e) {
+        if(res.data.resultCode === 0) {
+            console.log(res)
+            dispatch(getAuthUserData())
+            debugger
+        } else {
+            dispatch(stopSubmit("login", {email: "total error"}))
+        }
+        
+    } catch (e) {   
         throw new Error(e)
     }
 }
@@ -53,7 +58,6 @@ export const logout = (): AppThunkTypes => async dispatch => {
         dispatch(setUserDataAC(null, null, null, false))
     }
 }
-
 export const _login = (email: string, password: string, rememberMe: boolean): AppThunkTypes => dispatch => {
     authApi.login(email, password, rememberMe)
         .then(res => {
@@ -63,7 +67,6 @@ export const _login = (email: string, password: string, rememberMe: boolean): Ap
             }
         })
 } // Санка посттроенная на promise .then
-
 export const _logout = (): AppThunkTypes => dispatch => {
     authApi.logout()
         .then(res => {
@@ -72,5 +75,11 @@ export const _logout = (): AppThunkTypes => dispatch => {
             }
         })
 } // Санка посттроенная на promise .then
+
+// types
+export type AuthType = typeof initialState
+type StopSubmitActionType = ReturnType<typeof stopSubmit>
+type SetUserDataActionType = ReturnType<typeof setUserDataAC>
+export type AuthActionsType = SetUserDataActionType | StopSubmitActionType
 
 export default authReducer;

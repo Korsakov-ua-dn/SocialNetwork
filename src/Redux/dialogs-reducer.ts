@@ -25,25 +25,23 @@ let initialState = {
     ] as Array<MessageType>,
 }
 
-const dialogsReducer = (state: DialogPageType = initialState, action: AppActionTypes): DialogPageType => {
-
-
+const dialogsReducer = (state: DialogPageType = initialState, action: DialogsActionsType): DialogPageType => {
     switch (action.type) {
-
         case "SEND-MESSAGE":
             return {
                 ...state,
                 messagesData: [...state.messagesData, {id: 6, message: action.newMessageBody}]
             }
-
         default:
             return state;
-
     }
 }
 
-export const dialogsActions = {
-    sendMessageAC: (newMessageBody: string) => ({type: "SEND-MESSAGE", newMessageBody} as const),
-}
+// actions
+export const sendMessageAC = (newMessageBody: string) => ({type: "SEND-MESSAGE", newMessageBody} as const)
+
+// types
+type SendMessageActionType = ReturnType<typeof sendMessageAC>
+export type DialogsActionsType = SendMessageActionType
 
 export default dialogsReducer;

@@ -35,7 +35,6 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
 const LoginContainer: React.FC<LoginContainerPropsType> = (props) => {
-
     const submit = (formData: FormDataType) => {
         console.log(formData)
         props.login(formData.email, formData.password, formData.rememberMe)
@@ -48,13 +47,13 @@ const LoginContainer: React.FC<LoginContainerPropsType> = (props) => {
         <LoginReduxForm onSubmit={submit}/>
     </div>
 }
-type mapStateToPropsType = {
-    auth: AuthType
-}
-type mapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe: boolean) => void
-}
+
+// types
+type mapStateToPropsType = {auth: AuthType}
+type mapDispatchToPropsType = {login: (email: string, password: string, rememberMe: boolean) => void}
 type LoginContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
+
+
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({auth: state.auth})
 
 export default connect(mapStateToProps, {login})(LoginContainer)
