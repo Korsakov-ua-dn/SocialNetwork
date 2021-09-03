@@ -4,7 +4,7 @@ import {UsersPageType, getUsers, follow, unfollow} from '../../../Redux/users-re
 import React from 'react'
 import Users from './Users'
 import Preloader from '../../common/Preloader/Preloader'
-import {WithAuthRedirect} from '../../../hoc/withAuthRedirect'
+// import {WithAuthRedirect} from '../../../hoc/withAuthRedirect'
 import { compose } from 'redux'
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
@@ -32,9 +32,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
     }
 }
 
-type mapStatePropsType = {
-    usersPage: UsersPageType
-}
+type mapStatePropsType = {usersPage: UsersPageType}
 type mapDispatchPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
@@ -42,13 +40,8 @@ type mapDispatchPropsType = {
 }
 export type UsersContainerPropsType = mapStatePropsType & mapDispatchPropsType
 
-const mapStateToProps = (state: AppStateType): mapStatePropsType => {
-    return {
-        usersPage: state.usersPage
-    }
-}
+const mapStateToProps = (state: AppStateType): mapStatePropsType => ({usersPage: state.usersPage})
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {follow, unfollow, getUsers}),
-    WithAuthRedirect
 )(UsersContainer)

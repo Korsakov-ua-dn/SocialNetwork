@@ -12,7 +12,10 @@ class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) userId = "18347"
+        if (!userId) {
+            if(this.props.userId) userId = this.props.userId.toString() 
+            else this.props.history.push("/login")
+        } 
         this.props.getUserProfile(userId)
         this.props.getUserStatus(userId)
     }
@@ -25,6 +28,8 @@ class ProfileContainer extends React.Component<PropsType> {
 type mapStateToPropsType = {
     profile: ProfileType | null
     status: string
+    userId: number | null,
+    isAuth: boolean
 }
 type mapDispatchToPropsType = {
     getUserProfile: (userId: string) => void
@@ -39,11 +44,12 @@ type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    userId: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus}),
     withRouter,
-    // WithAuthRedirect
 )(ProfileContainer)

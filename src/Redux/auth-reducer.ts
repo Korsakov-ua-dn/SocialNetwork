@@ -27,7 +27,7 @@ export const setUserDataAC = (id: number | null, email: string| null, login: str
 
 // thunks
 export const getAuthUserData = (): AppThunkTypes => dispatch => {
-    authApi.authMe()
+    return authApi.authMe()
         .then(responce => {
             if (responce.data.resultCode === 0) {
                 let {id, email, login} = responce.data.data
@@ -36,14 +36,11 @@ export const getAuthUserData = (): AppThunkTypes => dispatch => {
         })
 }
 export const login = (email: string, password: string, rememberMe: boolean): AppThunkTypes => async dispatch => {
-
     try {
-        debugger
         const res = await authApi.login(email, password, rememberMe)
         if(res.data.resultCode === 0) {
             console.log(res)
             dispatch(getAuthUserData())
-            debugger
         } else {
             dispatch(stopSubmit("login", {email: "total error"}))
         }

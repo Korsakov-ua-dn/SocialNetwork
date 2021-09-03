@@ -10,28 +10,43 @@ import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
 import DialogsContainer from './Components/MainContent/Dialog/DialogsContainer'
 import LoginContainer from './Components/Login/Login'
+import { connect } from 'react-redux'
+import {initializeApp} from './Redux/app-reducer'
+import {AppStateType, AppThunkTypes} from './Redux/redux-store'
 
-const App = () => {
+class App extends React.Component<AppPropsType> {
 
-    return (
-        <div className={`${s.app_wrapper} container`}>
-            <HeaderContainer/>
-            <Nav/>
-            <div className={s.app_wrapper_content}>
-                <Route path='/profile/:userId?'
-                       render={() => <ProfileContainer/>}/>
-                <Route path='/dialogs'
-                       render={() => <DialogsContainer/>}/>
-                <Route path='/users'
-                       render={() => <UsersContainer/>}/>
-                <Route path='/news' component={News}/>
-                <Route path='/music' component={Music}/>
-                <Route path='/settings' component={Settings}/>
-                <Route path='/login'
-                       render={() => <LoginContainer />} />
+    componentDidMount() {
+        this.props.initializeApp()
+    }
+
+    render() {
+        return (
+            <div className={`${s.app_wrapper} container`}>
+                <HeaderContainer/>
+                <Nav/>
+                <div className={s.app_wrapper_content}>
+                    <Route path='/profile/:userId?'
+                           render={() => <ProfileContainer/>}/>
+                    <Route path='/dialogs'
+                           render={() => <DialogsContainer/>}/>
+                    <Route path='/users'
+                           render={() => <UsersContainer/>}/>
+                    <Route path='/news' component={News}/>
+                    <Route path='/music' component={Music}/>
+                    <Route path='/settings' component={Settings}/>
+                    <Route path='/login'
+                           render={() => <LoginContainer />} />
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
-export default App
+type mapDispatchToPropsType = {initializeApp: () => void}
+type mapStateToPropsType = {isInit: boolean}
+type AppPropsType = mapDispatchToPropsType & mapStateToPropsType
+
+const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({isInit: state.app.isInit})
+
+export default connect(mapStateToProps, {initializeApp} )(App)

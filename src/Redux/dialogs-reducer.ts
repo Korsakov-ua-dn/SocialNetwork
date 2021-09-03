@@ -1,5 +1,3 @@
-import {AppActionTypes} from "./redux-store";
-
 export type DialogType = {
     id: number
     name: string
