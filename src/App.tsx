@@ -12,7 +12,7 @@ import DialogsContainer from './Components/MainContent/Dialog/DialogsContainer'
 import LoginContainer from './Components/Login/Login'
 import { connect } from 'react-redux'
 import {initializeApp} from './Redux/app-reducer'
-import {AppStateType, AppThunkTypes} from './Redux/redux-store'
+import {AppStateType} from './Redux/redux-store'
 
 class App extends React.Component<AppPropsType> {
 

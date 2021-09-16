@@ -2,36 +2,47 @@ import React from 'react'
 // import s from './MyPosts.module.css'
 import Post from './Post/Post'
 import {MyPostsPropsType} from './MyPostsContainer'
-import { Field, InjectedFormProps, reduxForm } from 'redux-form'
-import {required, maxLengthCreator} from '../../../../utils/validator'
-import {Textarea} from '../../../common/FormsControls/FormsControls'
-
-const maxLength30 = maxLengthCreator(30)
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 type FormDataType = {
     newPostText: string
 }
-const ProfileForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    return <form onSubmit={props.handleSubmit}>
-        <Field component={Textarea} name="newPostText" placeholder='your news...' validate={[required, maxLength30]}/>
-        <button>Send</button>
+type PropsType = {
+    addPost: (newPostText: string) => void
+}
+const MyPostForm: React.FC<PropsType> = (props) => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FormDataType>();
+    const onSubmit: SubmitHandler<FormDataType> = data => props.addPost(data.newPostText)
+    
+
+    return <form  onSubmit={handleSubmit(onSubmit)}>
+        <div>
+            <input placeholder='my news...' {...register("newPostText", {
+                required: true,
+                maxLength : {
+                value: 10,
+                message: 'max length 30'
+                }
+            })}/>
+            <button>Send</button>
+        </div>
+        {errors.newPostText?.type === "required" && <span>Field is required</span>}
+        {errors.newPostText?.message && <span>{errors.newPostText.message}</span>}
+       
     </form>
 }
-
-const AddNewPostForm = reduxForm<FormDataType>({form: "ProfilePost"})(ProfileForm)
 
 const MyPosts = ({postsData, addPost}: MyPostsPropsType) => {
 
     let postItems = postsData.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
-    const submit = (ProfileForm: FormDataType) => {
-        addPost(ProfileForm.newPostText)
-    }
-
     return (
         <div>
             <h3>My Posts</h3>
-            <AddNewPostForm onSubmit={submit}/>
+
+            <MyPostForm addPost={addPost}/>
+
             {postItems}
         </div>
     )

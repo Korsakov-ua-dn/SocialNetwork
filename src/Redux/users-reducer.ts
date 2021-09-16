@@ -107,20 +107,14 @@ export const unfollow = (userId: number) => {
     }
 }
 
-type followSucces = ReturnType<typeof followSucces>
-type unfollowSucces = ReturnType<typeof unfollowSucces>
-type setUsersAC = ReturnType<typeof setUsersAC>
-type follsetUsersCurrentPageACowSucces = ReturnType<typeof setUsersCurrentPageAC>
-type setTotalCountAC = ReturnType<typeof setTotalCountAC>
-type toggleIsFetchingAC = ReturnType<typeof toggleIsFetchingAC>
-type toggleIsFollowingProgressAC = ReturnType<typeof toggleIsFollowingProgressAC>
-export type UsersActionType = followSucces
-    | unfollowSucces
-    | setUsersAC
-    | follsetUsersCurrentPageACowSucces
-    | setTotalCountAC
-    | toggleIsFetchingAC
-    | toggleIsFollowingProgressAC
+export type UsersActionType = 
+      ReturnType<typeof followSucces>
+    | ReturnType<typeof unfollowSucces>
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setUsersCurrentPageAC>
+    | ReturnType<typeof setTotalCountAC>
+    | ReturnType<typeof toggleIsFetchingAC>
+    | ReturnType<typeof toggleIsFollowingProgressAC>
 
 
 export default usersReducer;

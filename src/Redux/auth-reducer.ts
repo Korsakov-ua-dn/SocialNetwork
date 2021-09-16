@@ -45,7 +45,7 @@ export const login = (email: string, password: string, rememberMe: boolean): App
             dispatch(stopSubmit("login", {email: "total error"}))
         }
         
-    } catch (e) {   
+    } catch (e: any) {   
         throw new Error(e)
     }
 }
