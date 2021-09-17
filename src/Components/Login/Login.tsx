@@ -18,9 +18,10 @@ type LoginFormPropsType = {
 export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormDataType>();
     const onSubmit: SubmitHandler<FormDataType> = data => props.login(data.email, data.password, data.rememberMe)
+    const onError = (errors: any, e: any) => console.log(errors, e);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
             <div>
                 <label>{"email"}</label>
                 <input  {...register("email", { required: true })} />
@@ -37,6 +38,7 @@ export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
                 <label>{"remember me"}</label>
                 <input type={"checkbox"} {...register("rememberMe")} />
             </div>
+            
             
             <input type="submit" />
         </form>
@@ -67,8 +69,11 @@ export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
 const LoginContainer: React.FC<LoginContainerPropsType> = (props) => {
 
     if(props.auth.isAuth) return <Redirect to={"/Profile"}/>
+    console.log(props.auth.error);
+    
 
     return <div>
+        <div>{props.auth.error.length ? props.auth.error: null}</div>
         <h1> Login </h1>
         <LoginForm login={props.login}/>
     </div>

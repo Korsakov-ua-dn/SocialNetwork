@@ -28,7 +28,9 @@ export const initializeApp = (): AppThunkTypes => dispatch => {
 
 // types
 export type AppType = typeof initialState
+
 type SuccessInit = ReturnType<typeof successInit>
+
 export type AppActionsType = SuccessInit
 
 export default appReducer

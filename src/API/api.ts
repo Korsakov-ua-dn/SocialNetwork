@@ -64,7 +64,7 @@ type GetUsersType = {
 
 type CommonType<T = {}> = {
     data: T
-    messages: []
+    messages: Array<string>
     fieldsErrors: []
     resultCode: number
 }

@@ -18,14 +18,14 @@ const MyPostForm: React.FC<PropsType> = (props) => {
 
     return <form  onSubmit={handleSubmit(onSubmit)}>
         <div>
-            <input placeholder='my news...' {...register("newPostText", {
+            <textarea placeholder='my news...' {...register("newPostText", {
                 required: true,
                 maxLength : {
                 value: 10,
-                message: 'max length 30'
+                message: 'max length 10'
                 }
             })}/>
-            <button>Send</button>
+            <button>Post</button>
         </div>
         {errors.newPostText?.type === "required" && <span>Field is required</span>}
         {errors.newPostText?.message && <span>{errors.newPostText.message}</span>}

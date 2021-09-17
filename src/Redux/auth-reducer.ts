@@ -1,21 +1,23 @@
 import {AppThunkTypes} from './redux-store'
 import {authApi} from '../API/api'
-import { stopSubmit } from 'redux-form'
 
 let initialState = {
     id: null as number | null,
     email: null as string | null,
     login: null as string | null,
-    isAuth: false
+    isAuth: false,
+    error: '' as string
 }
 
 const authReducer = (state: AuthType = initialState, action: AuthActionsType): AuthType => {
     switch (action.type) {
+        case "SET_ERROR":
         case "SET_USER_DATA":
             return {
                 ...state,
                 ...action.payload,
             }
+        
         default:
             return state;
     }
@@ -24,6 +26,7 @@ const authReducer = (state: AuthType = initialState, action: AuthActionsType): A
 // actions
 export const setUserDataAC = (id: number | null, email: string| null, login: string| null, isAuth: boolean) => 
     ({type: "SET_USER_DATA", payload: {id, email, login, isAuth}} as const)
+export const setError = (error: string) => ({type: "SET_ERROR", payload: {error}} as const)
 
 // thunks
 export const getAuthUserData = (): AppThunkTypes => dispatch => {
@@ -42,10 +45,10 @@ export const login = (email: string, password: string, rememberMe: boolean): App
             console.log(res)
             dispatch(getAuthUserData())
         } else {
-            dispatch(stopSubmit("login", {email: "total error"}))
+            dispatch(setError(res.data.messages[0]))
         }
         
-    } catch (e: any) {   
+    } catch (e: any) {      
         throw new Error(e)
     }
 }
@@ -75,8 +78,9 @@ export const _logout = (): AppThunkTypes => dispatch => {
 
 // types
 export type AuthType = typeof initialState
-type StopSubmitActionType = ReturnType<typeof stopSubmit>
-type SetUserDataActionType = ReturnType<typeof setUserDataAC>
-export type AuthActionsType = SetUserDataActionType | StopSubmitActionType
+
+export type AuthActionsType = 
+      ReturnType<typeof setUserDataAC> 
+    | ReturnType<typeof setError>
 
 export default authReducer;
