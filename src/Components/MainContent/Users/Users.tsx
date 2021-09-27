@@ -1,10 +1,14 @@
 import style from './Users.module.css'
 import avatar from '../../../assets/img/null-avatar-icon.jpg'
-import {UsersPageType} from '../../../Redux/users-reducer'
+import {UserDataType} from '../../../Redux/users-reducer'
 import {NavLink} from 'react-router-dom'
 
 type UsersPropsType = {
-    usersPage: UsersPageType
+    users: Array<UserDataType>
+    totalCount: number
+    pageSize: number
+    currentPage: number
+    isFollowingProgress: number[]
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     onPageChanged: (currentPage: number) => void
@@ -12,9 +16,8 @@ type UsersPropsType = {
 
 const Users = (props: UsersPropsType) => {
 
-    const state = props.usersPage
 
-    let pagesCount = Math.ceil(state.totalCount / state.pageSize)
+    let pagesCount = Math.ceil(props.totalCount / props.pageSize)
     let pages = []
 
     for (let i = 1; i <= pagesCount; i++) {
@@ -27,13 +30,13 @@ const Users = (props: UsersPropsType) => {
                 {
                     pages.map(p => <span
                         key={p}
-                        className={state.currentPage === p ? style.selectedPage : ""}
+                        className={props.currentPage === p ? style.selectedPage : ""}
                         onClick={() => props.onPageChanged(p)}
                     >{p} </span>)
                 }
             </div>
             {
-                state.users.map(u => <div key={u.id} className={style.userWrapper}>
+                props.users.map(u => <div key={u.id} className={style.userWrapper}>
                     <div>
                         <div className={style.avatar}>
                             <NavLink to={"/profile/" + u.id}>
@@ -41,11 +44,15 @@ const Users = (props: UsersPropsType) => {
                             </NavLink>
                         </div>
                         {u.followed
-                            ? <button disabled={state.isFollowingProgress.some(id => id === u.id)}
-                                    onClick={() => {props.unfollow(u.id)}}>UNFOLLOW</button>
+                            ? <button disabled={props.isFollowingProgress.some(id => id === u.id)}
+                                      onClick={() => {
+                                          props.unfollow(u.id)
+                                      }}>UNFOLLOW</button>
 
-                            : <button disabled={state.isFollowingProgress.some(id => id === u.id)} 
-                                    onClick={() => {props.follow(u.id)}}>FOLLOW</button>
+                            : <button disabled={props.isFollowingProgress.some(id => id === u.id)}
+                                      onClick={() => {
+                                          props.follow(u.id)
+                                      }}>FOLLOW</button>
                         }
                     </div>
                     <div>

@@ -61,8 +61,8 @@ const usersReducer = (state: UsersPageType = initialState, action: UsersActionTy
 }
 
 // actions 
-export const followSucces = (userId: number) => ({type: "FOLLOW", userId} as const)
-export const unfollowSucces = (userId: number) => ({type: "UNFOLLOW", userId} as const)
+export const followSuccess = (userId: number) => ({type: "FOLLOW", userId} as const)
+export const unfollowSuccess = (userId: number) => ({type: "UNFOLLOW", userId} as const)
 export const setUsersAC = (users: Array<UserDataType>) => ({type: "SET_USERS", users} as const)
 export const setUsersCurrentPageAC = (currentPage: number) => ({type: "SET_USERS_CURRENT_PAGE", currentPage} as const)
 export const setTotalCountAC = (totalCount: number) => ({type: "SET_TOTAL_COUNT", totalCount} as const)
@@ -72,7 +72,7 @@ export const toggleIsFollowingProgressAC = (isFollowingProgress: boolean, userId
 
 
 // thunks    
-export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const requestUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(setUsersCurrentPageAC(currentPage))
     dispatch(toggleIsFetchingAC(true))
     userApi.getUsers(currentPage, pageSize)
@@ -88,7 +88,7 @@ export const follow = (userId: number) => {
         userApi.follow(userId)
             .then(data => {
                 if (data.resultCode === 0) {
-                    dispatch(followSucces(userId))
+                    dispatch(followSuccess(userId))
                 }
                 dispatch(toggleIsFollowingProgressAC(false, userId))
             })
@@ -100,7 +100,7 @@ export const unfollow = (userId: number) => {
         userApi.unfollow(userId)
             .then(data => {
                 if (data.resultCode === 0) {
-                    dispatch(unfollowSucces(userId))
+                    dispatch(unfollowSuccess(userId))
                 }
                 dispatch(toggleIsFollowingProgressAC(false, userId))
             })
@@ -108,8 +108,8 @@ export const unfollow = (userId: number) => {
 }
 
 export type UsersActionType = 
-      ReturnType<typeof followSucces>
-    | ReturnType<typeof unfollowSucces>
+      ReturnType<typeof followSuccess>
+    | ReturnType<typeof unfollowSuccess>
     | ReturnType<typeof setUsersAC>
     | ReturnType<typeof setUsersCurrentPageAC>
     | ReturnType<typeof setTotalCountAC>
