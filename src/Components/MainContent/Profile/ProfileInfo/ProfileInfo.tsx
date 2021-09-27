@@ -1,7 +1,7 @@
 import React from 'react'
 import Preloader from '../../../common/Preloader/Preloader'
 import s from './ProfileInfo.module.css'
-import ProfileStatus from './ProfileStatus'
+import ProfileStatusHooks from './ProfileStatusHooks'
 import {ProfileType} from '../../../../Redux/profile-reducer'
 
 type ProfileInfoPropsType = {
@@ -27,7 +27,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <div style={avatarStyle} className={s.ava_img}/>
                 <div>
                     <h3>{props.profile.fullName}</h3>
-                    <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus} />
+                    <ProfileStatusHooks status={props.status} updateUserStatus={props.updateUserStatus} />
                     <p>Samurai Level 1</p>
                     <p>{`aboutMe: ${props.profile.aboutMe}`}</p>
                     <p>city: Donetsk</p>
