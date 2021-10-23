@@ -5,10 +5,6 @@ type ProfileStatusPropsType = {
     status: string
     updateUserStatus: (status: string) => void
 }
-type StateType = {
-    editMode: boolean
-    status: string
-}
 
 const ProfileStatusHooks: React.FC<ProfileStatusPropsType> = ({status, updateUserStatus}) => {
 
@@ -32,7 +28,7 @@ const ProfileStatusHooks: React.FC<ProfileStatusPropsType> = ({status, updateUse
     //             status: this.props.status
     //         })
     //     }
-    // } // пофиксили багу с отображением данных в инпуте 
+    // } // пофиксили багу с отображением данных в инпуте
     // // (в ProfileContainer два запроса на сервер и данные могут приходить в разной поседовательности) Lesson 74
 
     return (
@@ -46,7 +42,7 @@ const ProfileStatusHooks: React.FC<ProfileStatusPropsType> = ({status, updateUse
                 <div>
                     <input autoFocus onBlur={activateViewMode} 
                             onChange={onStatusChange}
-                            value={status} type="text" />
+                            value={localValue} type="text" />
                 </div>
             }
         </div>

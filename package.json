@@ -12,7 +12,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.18",
     "axios": "^0.21.1",
-    "reac t-dom": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react": "^17.0.2",
     "react-hook-form": "^7.15.3",
     "react-redux": "^7.2.5",
