@@ -29,7 +29,7 @@ export type ProfileType = {
     contacts: ContactType
     photos: PhotosType
 }
-type ProfilePageType = typeof initialState
+export type ProfilePageType = typeof initialState
 
 let initialState = {
     postsData: [
@@ -40,7 +40,7 @@ let initialState = {
     status: ""
 }
 
-const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
 
     switch (action.type) {
         case "ADD-POST":
@@ -57,6 +57,11 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
             return {...state, profile: action.profile}
         case "SET_STATUS":
             return {...state, status: action.status}
+        case "DELETE_POST":
+            return {
+                ...state,
+                postsData: state.postsData.filter(el => el.id !== action.postId)
+            }
         default:
             return state;
     }
@@ -66,6 +71,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
 export const addPostAC = (newPostText: string) => ({type: "ADD-POST", newPostText} as const)
 export const setUserProfileAC = (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile} as const)
 export const setStatusAC = (status: string) => ({type: "SET_STATUS", status} as const)
+export const deletePostAC = (postId: number) => ({type: "DELETE_POST", postId} as const)
 
 // thunks
 export const getUserProfile = (userId: string) => (dispatch: Dispatch) => {
@@ -92,6 +98,10 @@ export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
 type AddPostActionType = ReturnType<typeof addPostAC>
 type SetUserProfileActionType = ReturnType<typeof setUserProfileAC>
 type SetStatusActionType = ReturnType<typeof setStatusAC>
-export type ProfileActionType = AddPostActionType | SetUserProfileActionType | SetStatusActionType
+type DeletePostActionType = ReturnType<typeof deletePostAC>
+export type ProfileActionType = AddPostActionType
+    | SetUserProfileActionType
+    | SetStatusActionType
+    | DeletePostActionType
 
 export default profileReducer;

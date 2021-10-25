@@ -1,4 +1,4 @@
-import usersReducer, {usersActions, UsersPageType} from './users-reducer'
+import usersReducer, {followSuccess, UsersPageType} from './users-reducer'
 
 test('Change follow to true', () => {
 
@@ -42,8 +42,9 @@ test('Change follow to true', () => {
         pageSize: 10,
         totalCount: 0,
         isFetching: false,
+        isFollowingProgress: [],
     }
-    const action = usersActions.followAC(1)
+    const action = followSuccess(1)
     const endState = usersReducer(initialState, action)
 
     expect(endState).toEqual({
@@ -86,6 +87,7 @@ test('Change follow to true', () => {
         pageSize: 10,
         totalCount: 0,
         isFetching: false,
+        isFollowingProgress: [],
     });
     expect(endState["users"].every(u => u.followed)).toBeTruthy();
     expect(endState["users"][0].followed).toBe(true);
