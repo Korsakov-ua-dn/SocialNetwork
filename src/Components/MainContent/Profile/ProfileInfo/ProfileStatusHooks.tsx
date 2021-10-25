@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import s from './ProfileInfo.module.css';
 
 type ProfileStatusPropsType = {
@@ -21,6 +21,8 @@ const ProfileStatusHooks: React.FC<ProfileStatusPropsType> = ({status, updateUse
     const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLocalValue(e.currentTarget.value)
     }
+
+    useEffect(() => { setLocalValue(status) }, [status])
 
     // componentDidUpdate(prevProps: ProfileStatusPropsType, prevState: StateType) {
     //     if(prevProps.status !== this.props.status) {

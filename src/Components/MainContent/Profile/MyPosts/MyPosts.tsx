@@ -34,7 +34,7 @@ const MyPostForm: React.FC<PropsType> = (props) => {
 }
 
 const MyPosts = ({postsData, addPost}: MyPostsPropsType) => {
-
+    
     let postItems = postsData.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     return (
@@ -48,4 +48,4 @@ const MyPosts = ({postsData, addPost}: MyPostsPropsType) => {
     )
 }
 
-export default MyPosts;
+export default React.memo(MyPosts);
