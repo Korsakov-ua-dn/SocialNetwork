@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from 'redux'
+import {applyMiddleware, combineReducers, createStore, compose} from 'redux'
 import profileReducer, {ProfileActionType} from './profile-reducer'
 import dialogsReducer, {DialogsActionsType} from './dialogs-reducer'
 import usersReducer, {UsersActionType} from './users-reducer'
@@ -19,7 +19,13 @@ let rootReducer = combineReducers({
     // form: formReducer, // redux-form state
 });
 
-let store = createStore(rootReducer, applyMiddleware(ThunkMiddleware))
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, composeEnhancers(
+    applyMiddleware(ThunkMiddleware)
+)); // для Redux DevTools
+
+// const store = createStore(rootReducer, applyMiddleware(ThunkMiddleware)) // без Redux DevTools
 
 
 // const appActions = {setUserDataAC, stopSubmit}
