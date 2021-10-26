@@ -4,15 +4,15 @@ import HeaderContainer from './Components/Header/HeaderContainer'
 import Nav from './Components/Nav/Nav'
 import ProfileContainer from './Components/MainContent/Profile/ProfileContainer'
 import UsersContainer from './Components/MainContent/Users/UsersContainer'
-import {Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import News from './Components/MainContent/News/News'
 import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
 import DialogsContainer from './Components/MainContent/Dialog/DialogsContainer'
 import LoginContainer from './Components/Login/Login'
-import { connect } from 'react-redux'
+import { connect, Provider } from 'react-redux'
 import {initializeApp} from './Redux/app-reducer'
-import {AppStateType} from './Redux/redux-store'
+import store, {AppStateType} from './Redux/redux-store'
 
 class App extends React.Component<AppPropsType> {
 
@@ -38,6 +38,7 @@ class App extends React.Component<AppPropsType> {
                     <Route path='/login'
                            render={() => <LoginContainer />} />
                 </div>
+                learn react
             </div>
         )
     }
@@ -49,4 +50,16 @@ type AppPropsType = mapDispatchToPropsType & mapStateToPropsType
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({isInit: state.app.isInit})
 
-export default connect(mapStateToProps, {initializeApp} )(App)
+let AppContainer = connect(mapStateToProps, {initializeApp} )(App)
+
+const SamuraiJSApp = () => {
+    return (
+     <Router>
+        <Provider store={store} >
+            <AppContainer />
+        </Provider>
+    </Router>
+    )
+}
+
+export default SamuraiJSApp
