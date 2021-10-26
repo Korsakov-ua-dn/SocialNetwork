@@ -62,7 +62,7 @@ type GetUsersType = {
     totalCount: number
 }
 
-type CommonType<T = {}> = {
+export type CommonType<T = {}> = {
     data: T
     messages: Array<string>
     fieldsErrors: []

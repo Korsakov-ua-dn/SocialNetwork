@@ -7,7 +7,7 @@ let initialState = {
 
 const appReducer = (state: AppType = initialState, action: AppActionsType): AppType => {
     switch (action.type) {
-        case "SUCCESS_INIT":
+        case "app/SUCCESS_INIT":
             return {...state, isInit: true}
         default:
             return state;
@@ -15,11 +15,11 @@ const appReducer = (state: AppType = initialState, action: AppActionsType): AppT
 }
 
 // actions
-export const successInit = () => ({type: "SUCCESS_INIT"} as const)
+export const successInit = () => ({type: "app/SUCCESS_INIT"} as const)
 
 // thunks
 export const initializeApp = (): AppThunkTypes => dispatch => {
-        let promise = dispatch(getAuthUserData())
+        let promise = dispatch(getAuthUserData()) // dispatch thunk return promis
         Promise.all([promise])
             .then(() => {
                 dispatch(successInit())

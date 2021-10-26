@@ -43,7 +43,7 @@ let initialState = {
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
 
     switch (action.type) {
-        case "ADD-POST":
+        case "profile/ADD-POST":
             let newPost: PostDataType = {
                 id: new Date().getTime(),
                 message: action.newPostText,
@@ -53,11 +53,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
                 ...state,
                 postsData: [...state.postsData, newPost],
             }
-        case "SET_USER_PROFILE":
+        case "profile/SET_USER_PROFILE":
             return {...state, profile: action.profile}
-        case "SET_STATUS":
+        case "profile/SET_STATUS":
             return {...state, status: action.status}
-        case "DELETE_POST":
+        case "profile/DELETE_POST":
             return {
                 ...state,
                 postsData: state.postsData.filter(el => el.id !== action.postId)
@@ -68,17 +68,15 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
 }
 
 // actions
-export const addPostAC = (newPostText: string) => ({type: "ADD-POST", newPostText} as const)
-export const setUserProfileAC = (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile} as const)
-export const setStatusAC = (status: string) => ({type: "SET_STATUS", status} as const)
-export const deletePostAC = (postId: number) => ({type: "DELETE_POST", postId} as const)
+export const addPostAC = (newPostText: string) => ({type: "profile/ADD-POST", newPostText} as const)
+export const setUserProfileAC = (profile: ProfileType) => ({type: "profile/SET_USER_PROFILE", profile} as const)
+export const setStatusAC = (status: string) => ({type: "profile/SET_STATUS", status} as const)
+export const deletePostAC = (postId: number) => ({type: "profile/DELETE_POST", postId} as const)
 
 // thunks
-export const getUserProfile = (userId: string) => (dispatch: Dispatch) => {
-    userApi.getProfile(userId)
-        .then(response => {
-            dispatch(setUserProfileAC(response.data))
-        });
+export const getUserProfile = (userId: string) => async (dispatch: Dispatch) => {
+    const response = await userApi.getProfile(userId)
+    dispatch(setUserProfileAC(response.data))
 }
 export const getUserStatus = (userId: string) => (dispatch: Dispatch) => {
     profileApi.getStatus(userId)

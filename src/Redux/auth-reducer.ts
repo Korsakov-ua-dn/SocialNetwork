@@ -11,8 +11,8 @@ let initialState = {
 
 const authReducer = (state: AuthType = initialState, action: AuthActionsType): AuthType => {
     switch (action.type) {
-        case "SET_ERROR":
-        case "SET_USER_DATA":
+        case "auth/SET_ERROR":
+        case "auth/SET_USER_DATA":
             return {
                 ...state,
                 ...action.payload,
@@ -25,19 +25,18 @@ const authReducer = (state: AuthType = initialState, action: AuthActionsType): A
 
 // actions
 export const setUserDataAC = (id: number | null, email: string| null, login: string| null, isAuth: boolean) => 
-    ({type: "SET_USER_DATA", payload: {id, email, login, isAuth}} as const)
-export const setError = (error: string) => ({type: "SET_ERROR", payload: {error}} as const)
+    ({type: "auth/SET_USER_DATA", payload: {id, email, login, isAuth}} as const)
+export const setError = (error: string) => ({type: "auth/SET_ERROR", payload: {error}} as const)
 
 // thunks
-export const getAuthUserData = (): AppThunkTypes => dispatch => {
-    return authApi.authMe()
-        .then(responce => {
-            if (responce.data.resultCode === 0) {
-                let {id, email, login} = responce.data.data
-                dispatch(setUserDataAC(id, email, login, true))
-            }
-        })
-}
+export const getAuthUserData = (): AppThunkTypes => async dispatch => {
+    const response = await authApi.authMe()
+        
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data
+        dispatch(setUserDataAC(id, email, login, true))
+    }
+} // асинхронная функция всегда автоматом возвращает промис!!!
 export const login = (email: string, password: string, rememberMe: boolean): AppThunkTypes => async dispatch => {
     try {
         const res = await authApi.login(email, password, rememberMe)
@@ -72,6 +71,15 @@ export const _logout = (): AppThunkTypes => dispatch => {
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setUserDataAC(null, null, null, false))
+            }
+        })
+} // Санка посттроенная на promise .then
+export const _getAuthUserData = (): AppThunkTypes => dispatch => {
+    return authApi.authMe()
+        .then(responce => {
+            if (responce.data.resultCode === 0) {
+                let {id, email, login} = responce.data.data
+                dispatch(setUserDataAC(id, email, login, true))
             }
         })
 } // Санка посттроенная на promise .then

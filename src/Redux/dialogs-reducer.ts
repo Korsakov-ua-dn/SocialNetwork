@@ -25,7 +25,7 @@ let initialState = {
 
 const dialogsReducer = (state: DialogPageType = initialState, action: DialogsActionsType): DialogPageType => {
     switch (action.type) {
-        case "SEND-MESSAGE":
+        case "dialogs/SEND-MESSAGE":
             return {
                 ...state,
                 messagesData: [...state.messagesData, {id: 6, message: action.newMessageBody}]
@@ -36,7 +36,7 @@ const dialogsReducer = (state: DialogPageType = initialState, action: DialogsAct
 }
 
 // actions
-export const sendMessageAC = (newMessageBody: string) => ({type: "SEND-MESSAGE", newMessageBody} as const)
+export const sendMessageAC = (newMessageBody: string) => ({type: "dialogs/SEND-MESSAGE", newMessageBody} as const)
 
 // types
 type SendMessageActionType = ReturnType<typeof sendMessageAC>
