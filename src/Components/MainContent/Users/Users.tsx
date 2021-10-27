@@ -33,7 +33,8 @@ const Users: React.FC<UsersPropsType> = (
                 totalCount={totalCount}
                 pageSize={pageSize}
                 currentPage={currentPage}
-                onPageChanged={onPageChanged} />
+                onPageChanged={onPageChanged}
+                portionSize={20} />
             {
                 users.map(u => <User key={u.id}
                     user={u}
