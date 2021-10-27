@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import s from './App.module.css'
 import HeaderContainer from './Components/Header/HeaderContainer'
 import Nav from './Components/Nav/Nav'
-import ProfileContainer from './Components/MainContent/Profile/ProfileContainer'
-import UsersContainer from './Components/MainContent/Users/UsersContainer'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import News from './Components/MainContent/News/News'
 import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
-import DialogsContainer from './Components/MainContent/Dialog/DialogsContainer'
-import LoginContainer from './Components/Login/Login'
 import { connect, Provider } from 'react-redux'
 import {initializeApp} from './Redux/app-reducer'
 import store, {AppStateType} from './Redux/redux-store'
+import { withSuspense } from './hoc/withSuspense'
+
+// const ProfileContainer = withSuspense(React.lazy(() => import('./Components/MainContent/Profile/ProfileContainer')))
+// ленивая загрузка + пропсы прокидываем в компоненту
+
+const ProfileContainer = React.lazy(() => import('./Components/MainContent/Profile/ProfileContainer'))
+const DialogsContainer = React.lazy(() => import('./Components/MainContent/Dialog/DialogsContainer'))
+const UsersContainer = React.lazy(() => import('./Components/MainContent/Users/UsersContainer'))
+const LoginContainer = React.lazy(() => import('./Components/Login/Login'))
+
 
 class App extends React.Component<AppPropsType> {
 
@@ -26,19 +32,18 @@ class App extends React.Component<AppPropsType> {
                 <HeaderContainer/>
                 <Nav/>
                 <div className={s.app_wrapper_content}>
-                    <Route path='/profile/:userId?'
-                           render={() => <ProfileContainer/>}/>
-                    <Route path='/dialogs'
-                           render={() => <DialogsContainer/>}/>
+                    <Route path='/profile/:userId?' render={ () => withSuspense(ProfileContainer) }/>
+                    <Route path='/dialogs' render={ () => withSuspense(DialogsContainer) }/>
                     <Route path='/users'
-                           render={() => <UsersContainer/>}/>
+                           render={() => <Suspense fallback={<div>Загрузка...</div>}>
+                           <UsersContainer />
+                       </Suspense>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                     <Route path='/settings' component={Settings}/>
-                    <Route path='/login'
-                           render={() => <LoginContainer />} />
+                    <Route path='/login' render={() => withSuspense(LoginContainer) } />
                 </div>
-                learn react
+                <div style={{display: "none"}}>learn react</div>
             </div>
         )
     }
@@ -60,6 +65,6 @@ const SamuraiJSApp = () => {
         </Provider>
     </Router>
     )
-}
+} // для App.test
 
 export default SamuraiJSApp
