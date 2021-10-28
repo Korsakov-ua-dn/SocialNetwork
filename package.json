@@ -1,5 +1,6 @@
 {
   "name": "socialnetwork",
+  "homepage": "https://Korsakov-ua-dn/SocialNetwork",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,8 +13,9 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.18",
     "axios": "^0.21.1",
-    "react-dom": "^17.0.2",
+    "gh-pages": "^3.2.3",
     "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-hook-form": "^7.15.3",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.2.0",
@@ -29,6 +31,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

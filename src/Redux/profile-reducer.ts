@@ -37,7 +37,7 @@ let initialState = {
         {id: 2, message: "Do not lose hope!", likesCount: 0}
     ] as Array<PostDataType>,
     profile: null as ProfileType | null,
-    status: ""
+    status: "",
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
@@ -62,6 +62,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
                 ...state,
                 postsData: state.postsData.filter(el => el.id !== action.postId)
             }
+        case "profile/SET_AVATAR":
+        return {...state, profile: {...state.profile, photos: action.photo} }
         default:
             return state;
     }
@@ -72,6 +74,7 @@ export const addPostAC = (newPostText: string) => ({type: "profile/ADD-POST", ne
 export const setUserProfileAC = (profile: ProfileType) => ({type: "profile/SET_USER_PROFILE", profile} as const)
 export const setStatusAC = (status: string) => ({type: "profile/SET_STATUS", status} as const)
 export const deletePostAC = (postId: number) => ({type: "profile/DELETE_POST", postId} as const)
+export const setAvatarAC = (photo: PhotosType) => ({type: "profile/SET_AVATAR", photo} as const)
 
 // thunks
 export const getUserProfile = (userId: string) => async (dispatch: Dispatch) => {
@@ -91,15 +94,22 @@ export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
         dispatch(setStatusAC(status))
     })
 }
+export const updateAvatar = (photo: any) => (dispatch: Dispatch) => {
+    profileApi.updatePhotos(photo)
+    .then(res => {
+        console.log(res.data.data.photos);
+        
+        if (res.data.resultCode === 0)
+        dispatch(setAvatarAC(res.data.data.photos))
+    })
+}
 
 // types
-type AddPostActionType = ReturnType<typeof addPostAC>
-type SetUserProfileActionType = ReturnType<typeof setUserProfileAC>
-type SetStatusActionType = ReturnType<typeof setStatusAC>
-type DeletePostActionType = ReturnType<typeof deletePostAC>
-export type ProfileActionType = AddPostActionType
-    | SetUserProfileActionType
-    | SetStatusActionType
-    | DeletePostActionType
+export type ProfileActionType = ReturnType<typeof addPostAC>
+    | ReturnType<typeof setUserProfileAC>
+    | ReturnType<typeof setStatusAC>
+    | ReturnType<typeof deletePostAC>
+    | ReturnType<typeof deletePostAC>
+    | ReturnType<typeof setAvatarAC>
 
 export default profileReducer;

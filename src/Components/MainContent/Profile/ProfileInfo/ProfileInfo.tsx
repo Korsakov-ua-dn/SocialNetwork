@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import Preloader from '../../../common/Preloader/Preloader'
 import s from './ProfileInfo.module.css'
 import ProfileStatusHooks from './ProfileStatusHooks'
 import {ProfileType} from '../../../../Redux/profile-reducer'
+import {ProfileContainerPropsType} from '../ProfileContainer'
+import { AddPropsType } from '../Profile'
 
-type ProfileInfoPropsType = {
-    profile: ProfileType | null
-    status: string
-    updateUserStatus: (status: string) => void
-}
+const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (props) => {
 
-const ProfileInfo = (props: ProfileInfoPropsType) => {
+    const addAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files)
+        props.updateAvatar(e.target.files[0])
+    }
 
     let photo;
 
@@ -26,6 +27,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
             <div className={s.personal_wrapper}>
                 <div style={avatarStyle} className={s.ava_img}/>
                 <div>
+                    {props.isOwner && <input type={"file"} onChange={addAvatar}/>}
                     <h3>{props.profile.fullName}</h3>
                     <ProfileStatusHooks status={props.status} updateUserStatus={props.updateUserStatus} />
                     <p>Samurai Level 1</p>
@@ -37,4 +39,4 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
     }
 }
 
-export default ProfileInfo;
+export default ProfileInfo

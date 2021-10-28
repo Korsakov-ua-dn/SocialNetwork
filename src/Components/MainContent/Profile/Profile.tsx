@@ -4,7 +4,11 @@ import MyPostsContainer from './MyPosts/MyPostsContainer'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import {ProfileContainerPropsType} from './ProfileContainer'
 
-const Profile = (props: ProfileContainerPropsType) => {
+export type AddPropsType = {
+    isOwner: boolean
+}
+
+const Profile: React.FC<ProfileContainerPropsType & AddPropsType> = (props) => {
     return (
         <div>
             <div className={s.bg_img}/>
