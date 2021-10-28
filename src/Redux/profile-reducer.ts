@@ -35,7 +35,7 @@ let initialState = {
     postsData: [
         {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
         {id: 2, message: "Do not lose hope!", likesCount: 0}
-    ] as Array<PostDataType>,
+    ]  ,
     profile: null as ProfileType | null,
     status: "",
 }
@@ -63,7 +63,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
                 postsData: state.postsData.filter(el => el.id !== action.postId)
             }
         case "profile/SET_AVATAR":
-        return {...state, profile: {...state.profile, photos: action.photo} }
+            return state.profile ? {...state, profile: {...state.profile, photos: action.photo} } : state
+            // проверка на null, иначе ошибка деструктуризации ...state.profile
         default:
             return state;
     }
@@ -97,8 +98,6 @@ export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
 export const updateAvatar = (photo: any) => (dispatch: Dispatch) => {
     profileApi.updatePhotos(photo)
     .then(res => {
-        console.log(res.data.data.photos);
-        
         if (res.data.resultCode === 0)
         dispatch(setAvatarAC(res.data.data.photos))
     })

@@ -2,7 +2,6 @@ import React, { ChangeEvent } from 'react'
 import Preloader from '../../../common/Preloader/Preloader'
 import s from './ProfileInfo.module.css'
 import ProfileStatusHooks from './ProfileStatusHooks'
-import {ProfileType} from '../../../../Redux/profile-reducer'
 import {ProfileContainerPropsType} from '../ProfileContainer'
 import { AddPropsType } from '../Profile'
 
