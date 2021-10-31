@@ -68,6 +68,14 @@ const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}
             <span><b>Open to work: </b>{profile?.lookingForAJob ? "Yes" : "No"}</span>
             <span><b>job description: </b>{profile?.lookingForAJobDescription}</span>
             <span><b>aboutMe: </b>{profile?.aboutMe}</span>
+            <span><b>Contacts: </b>{Object.keys(profile.contacts).map(key => {
+                return (
+                    <div>
+                        <b>{key}: </b>{profile.contacts?[key] : null}
+                    </div>
+                )
+            })
+            }</span>
         </>
     )
 }
