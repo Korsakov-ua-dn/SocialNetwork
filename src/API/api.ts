@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {UserDataType} from '../Redux/users-reducer'
 import {ProfileType} from '../Redux/profile-reducer'
+import {DescriptionDataType} from "../Components/MainContent/Profile/ProfileInfo/ProfileInfo";
 
 const instance = axios.create({
     withCredentials: true,
@@ -48,6 +49,9 @@ export const profileApi = {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    updateDescription(data: DescriptionDataType) {
+        return instance.put(`/profile`, {...data})
     },
 }
 

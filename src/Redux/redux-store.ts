@@ -27,7 +27,6 @@ const store = createStore(rootReducer, composeEnhancers(
 
 // const store = createStore(rootReducer, applyMiddleware(ThunkMiddleware)) // без Redux DevTools
 
-
 // const appActions = {setUserDataAC, stopSubmit}
 // type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never
 // export type InferActionTypes<T extends { [key: string]: (...args: any) => any }> = ReturnType<PropertiesTypes<T>>

@@ -2,18 +2,25 @@ import React from 'react'
 import Profile from './Profile'
 import {connect} from 'react-redux'
 import {AppStateType} from '../../../Redux/redux-store'
-import {getUserProfile, updateUserStatus, getUserStatus, updateAvatar, ProfileType} from '../../../Redux/profile-reducer'
+import {
+    getUserProfile,
+    updateUserStatus,
+    getUserStatus,
+    updateAvatar,
+    updateDescription,
+    ProfileType,
+} from '../../../Redux/profile-reducer'
 import {withRouter} from 'react-router-dom'
 import {RouteComponentProps} from 'react-router'
-// import {WithAuthRedirect} from '../../../hoc/withAuthRedirect'
-import { compose } from 'redux'
+import {compose} from 'redux'
+import {DescriptionDataType} from "./ProfileInfo/ProfileInfo";
 
 class ProfileContainer extends React.Component<PropsType> {
 
-    identificateUser() {
+    identifyUser() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            if(this.props.userId) userId = this.props.userId.toString() 
+            if (this.props.userId) userId = this.props.userId.toString()
             else this.props.history.push("/login")
         }
         this.props.getUserProfile(userId)
@@ -21,12 +28,12 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     componentDidMount() {
-        this.identificateUser()
+        this.identifyUser()
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: {}, snapshot: any) {
         if (this.props.match.params.userId !== prevProps.match.params.userId) {
-            this.identificateUser()
+            this.identifyUser()
         }
     }
 
@@ -43,12 +50,11 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
 })
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus, updateAvatar}),
+    connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus, updateAvatar, updateDescription}),
     withRouter,
 )(ProfileContainer)
 
 // types
-
 type mapStateToPropsType = {
     profile: ProfileType | null
     status: string
@@ -60,6 +66,7 @@ type mapDispatchToPropsType = {
     getUserStatus: (userId: string) => void
     updateUserStatus: (status: string) => void
     updateAvatar: (photo: any) => void
+    updateDescription: (data: DescriptionDataType) => void
 }
 export type ProfileContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 type PathParamsType = {

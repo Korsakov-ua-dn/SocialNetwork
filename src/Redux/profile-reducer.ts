@@ -1,5 +1,7 @@
-import { Dispatch } from 'redux'
+import {Dispatch} from 'redux'
 import {userApi, profileApi} from '../API/api'
+import {AppStateType, AppThunkTypes} from "./redux-store";
+import {DescriptionDataType} from "../Components/MainContent/Profile/ProfileInfo/ProfileInfo";
 
 export type PostDataType = {
     id: number
@@ -35,7 +37,7 @@ let initialState = {
     postsData: [
         {id: 1, message: "Hey, how are your samurai way?", likesCount: 13},
         {id: 2, message: "Do not lose hope!", likesCount: 0}
-    ]  ,
+    ],
     profile: null as ProfileType | null,
     status: "",
 }
@@ -63,8 +65,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
                 postsData: state.postsData.filter(el => el.id !== action.postId)
             }
         case "profile/SET_AVATAR":
-            return state.profile ? {...state, profile: {...state.profile, photos: action.photo} } : state
-            // проверка на null, иначе ошибка деструктуризации ...state.profile
+            return state.profile ? {...state, profile: {...state.profile, photos: action.photo}} : state
+        // проверка на null, иначе ошибка деструктуризации ...state.profile
         default:
             return state;
     }
@@ -84,23 +86,32 @@ export const getUserProfile = (userId: string) => async (dispatch: Dispatch) => 
 }
 export const getUserStatus = (userId: string) => (dispatch: Dispatch) => {
     profileApi.getStatus(userId)
-    .then(res => {
-        dispatch(setStatusAC(res.data))
-    })
+        .then(res => {
+            dispatch(setStatusAC(res.data))
+        })
 }
 export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
     profileApi.updateStatus(status)
-    .then(res => {
-        if (res.data.resultCode === 0)
-        dispatch(setStatusAC(status))
-    })
+        .then(res => {
+            if (res.data.resultCode === 0)
+                dispatch(setStatusAC(status))
+        })
 }
 export const updateAvatar = (photo: any) => (dispatch: Dispatch) => {
     profileApi.updatePhotos(photo)
-    .then(res => {
-        if (res.data.resultCode === 0)
-        dispatch(setAvatarAC(res.data.data.photos))
-    })
+        .then(res => {
+            if (res.data.resultCode === 0)
+                dispatch(setAvatarAC(res.data.data.photos))
+        })
+}
+export const updateDescription = (data: DescriptionDataType): AppThunkTypes => (dispatch, getState: () => AppStateType) => {
+    profileApi.updateDescription(data)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                const userId = getState().auth.id?.toString()
+                if (userId) dispatch(getUserProfile(userId))
+            }
+        })
 }
 
 // types
