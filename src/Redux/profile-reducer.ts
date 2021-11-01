@@ -8,7 +8,7 @@ export type PostDataType = {
     message: string
     likesCount: number
 }
-type ContactType = {
+export type ContactType = {
     facebook: string | null
     github: string | null
     instagram: string | null
@@ -40,6 +40,7 @@ let initialState = {
     ],
     profile: null as ProfileType | null,
     status: "",
+    profileError: " ",
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
@@ -67,6 +68,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
         case "profile/SET_AVATAR":
             return state.profile ? {...state, profile: {...state.profile, photos: action.photo}} : state
         // проверка на null, иначе ошибка деструктуризации ...state.profile
+        case "profile/SET_ERROR":
+            return {...state, profileError: action.error}
         default:
             return state;
     }
@@ -78,6 +81,7 @@ export const setUserProfileAC = (profile: ProfileType) => ({type: "profile/SET_U
 export const setStatusAC = (status: string) => ({type: "profile/SET_STATUS", status} as const)
 export const deletePostAC = (postId: number) => ({type: "profile/DELETE_POST", postId} as const)
 export const setAvatarAC = (photo: PhotosType) => ({type: "profile/SET_AVATAR", photo} as const)
+export const setErrorAC = (error: string) => ({type: "profile/SET_ERROR", error} as const)
 
 // thunks
 export const getUserProfile = (userId: string) => async (dispatch: Dispatch) => {
@@ -110,6 +114,8 @@ export const updateDescription = (data: DescriptionDataType): AppThunkTypes => (
             if (res.data.resultCode === 0) {
                 const userId = getState().auth.id?.toString()
                 if (userId) dispatch(getUserProfile(userId))
+            } else {
+                dispatch(setErrorAC(res.data.messages))
             }
         })
 }
@@ -121,5 +127,6 @@ export type ProfileActionType = ReturnType<typeof addPostAC>
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof setAvatarAC>
+    | ReturnType<typeof setErrorAC>
 
 export default profileReducer;

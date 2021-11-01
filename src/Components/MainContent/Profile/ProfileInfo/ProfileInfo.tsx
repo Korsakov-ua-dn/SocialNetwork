@@ -4,7 +4,7 @@ import s from './ProfileInfo.module.css'
 import ProfileStatusHooks from './ProfileStatusHooks'
 import {ProfileContainerPropsType} from '../ProfileContainer'
 import {AddPropsType} from '../Profile'
-import {ProfileType} from "../../../../Redux/profile-reducer";
+import {ContactType, ProfileType} from "../../../../Redux/profile-reducer";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
@@ -12,6 +12,7 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
         updateAvatar,
         profile,
         status,
+        error,
         updateUserStatus,
         updateDescription,
         isOwner,
@@ -45,7 +46,7 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
                         editMode
                             ? <ProfileForm profile={profile} updateDescription={updateDescription}
                                            goToEditMode={() => setEditMode(false)}/>
-                            : <ProfileData profile={profile} isOwner={isOwner}
+                            : <ProfileData profile={profile} isOwner={isOwner} error={error}
                                            goToEditMode={() => setEditMode(true)}/>
                     }
                     <b><ProfileStatusHooks status={status} updateUserStatus={updateUserStatus}/></b>
@@ -58,9 +59,10 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
 type ProfileDataType = {
     profile: ProfileType
     isOwner: boolean
+    error: string
     goToEditMode: () => void
 }
-const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}) => {
+const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, error, goToEditMode}) => {
     return (
         <>
             {isOwner && <button onClick={goToEditMode}>edit</button>}
@@ -69,16 +71,25 @@ const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}
             <span><b>job description: </b>{profile?.lookingForAJobDescription}</span>
             <span><b>aboutMe: </b>{profile?.aboutMe}</span>
             <span><b>Contacts: </b>{Object.keys(profile.contacts).map(key => {
-                return (
-                    <div>
-                        <b>{key}: </b>{profile.contacts?[key] : null}
-                    </div>
-                )
-            })
-            }</span>
+                return <Contact key={key} title={key} value={profile.contacts[key as keyof ContactType]}/>
+            } )}</span>
+            {error && <span>{error}</span>}
         </>
     )
 }
+
+type ContactPropsType = {
+    title: string
+    value: string | null
+}
+const Contact: React.FC<ContactPropsType> = ({title, value}) => {
+    return (
+        <div>
+            <b>{title}: </b>{value}
+        </div>
+    )
+}
+
 type ProfileFormType = {
     profile: ProfileType
     goToEditMode: () => void
@@ -91,6 +102,16 @@ const ProfileForm: React.FC<ProfileFormType> = ({profile, goToEditMode, updateDe
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
             aboutMe: profile.aboutMe,
+            contacts: {
+                facebook: profile.contacts.facebook,
+                github: profile.contacts.github,
+                instagram: profile.contacts.instagram,
+                mainLink: profile.contacts.mainLink,
+                twitter: profile.contacts.twitter,
+                vk: profile.contacts.vk,
+                website: profile.contacts.website,
+                youtube: profile.contacts.youtube,
+            }
         }
     })
     const onSubmit: SubmitHandler<DescriptionDataType> = data => {
@@ -130,6 +151,16 @@ const ProfileForm: React.FC<ProfileFormType> = ({profile, goToEditMode, updateDe
                     })}/>
                 {errors.aboutMe?.type === "required" && <span>Field is required</span>}
             </div>
+            <div>
+                <label>contacts</label><br/>
+                {Object.keys(profile.contacts).map( key => {
+                    return (
+                        <div key={key}>
+                            <input placeholder={key} {...register(`contacts.${key as keyof ContactType}`)}/>
+                        </div>
+                    )
+                })}
+            </div>
             <input type="submit" value={"send"}/>
         </form>
     )
@@ -139,6 +170,7 @@ export type DescriptionDataType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string | null
     fullName: string
+    contacts: ContactType
 }
 
 export default ProfileInfo

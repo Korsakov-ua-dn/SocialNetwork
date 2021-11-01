@@ -53,7 +53,7 @@ export const profileApi = {
     updateDescription(data: DescriptionDataType) {
         return instance.put(`/profile`, {...data})
     },
-}
+}   
 
 export const authApi = {
     authMe() {
