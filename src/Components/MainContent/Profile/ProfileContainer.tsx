@@ -45,7 +45,6 @@ class ProfileContainer extends React.Component<PropsType> {
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
-    error: state.profilePage.profileError,
     userId: state.auth.id,
     isAuth: state.auth.isAuth,
 })
@@ -59,7 +58,6 @@ export default compose<React.ComponentType>(
 type mapStateToPropsType = {
     profile: ProfileType | null
     status: string
-    error: string
     userId: number | null
     isAuth: boolean
 }
@@ -68,7 +66,7 @@ type mapDispatchToPropsType = {
     getUserStatus: (userId: string) => void
     updateUserStatus: (status: string) => void
     updateAvatar: (photo: any) => void
-    updateDescription: (data: DescriptionDataType) => void
+    updateDescription: (data: DescriptionDataType) => Promise<any>
 }
 export type ProfileContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 type PathParamsType = {

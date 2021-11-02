@@ -12,7 +12,6 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
         updateAvatar,
         profile,
         status,
-        error,
         updateUserStatus,
         updateDescription,
         isOwner,
@@ -46,7 +45,7 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
                         editMode
                             ? <ProfileForm profile={profile} updateDescription={updateDescription}
                                            goToEditMode={() => setEditMode(false)}/>
-                            : <ProfileData profile={profile} isOwner={isOwner} error={error}
+                            : <ProfileData profile={profile} isOwner={isOwner}
                                            goToEditMode={() => setEditMode(true)}/>
                     }
                     <b><ProfileStatusHooks status={status} updateUserStatus={updateUserStatus}/></b>
@@ -59,10 +58,9 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
 type ProfileDataType = {
     profile: ProfileType
     isOwner: boolean
-    error: string
     goToEditMode: () => void
 }
-const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, error, goToEditMode}) => {
+const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}) => {
     return (
         <>
             {isOwner && <button onClick={goToEditMode}>edit</button>}
@@ -73,7 +71,6 @@ const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, error, goToEd
             <span><b>Contacts: </b>{Object.keys(profile.contacts).map(key => {
                 return <Contact key={key} title={key} value={profile.contacts[key as keyof ContactType]}/>
             } )}</span>
-            {error && <span>{error}</span>}
         </>
     )
 }
@@ -93,9 +90,10 @@ const Contact: React.FC<ContactPropsType> = ({title, value}) => {
 type ProfileFormType = {
     profile: ProfileType
     goToEditMode: () => void
-    updateDescription: (data: DescriptionDataType) => void
+    updateDescription: (data: DescriptionDataType) => Promise<any>
 }
 const ProfileForm: React.FC<ProfileFormType> = ({profile, goToEditMode, updateDescription}) => {
+    const [error, setError] = useState(null)
     const {register, handleSubmit, formState: {errors}} = useForm<DescriptionDataType>({
         defaultValues: {
             fullName: profile.fullName,
@@ -116,7 +114,8 @@ const ProfileForm: React.FC<ProfileFormType> = ({profile, goToEditMode, updateDe
     })
     const onSubmit: SubmitHandler<DescriptionDataType> = data => {
         updateDescription(data)
-        goToEditMode()
+            .then(() => goToEditMode())
+            .catch((err) => setError(err) )
     }
 
     return (
@@ -162,6 +161,7 @@ const ProfileForm: React.FC<ProfileFormType> = ({profile, goToEditMode, updateDe
                 })}
             </div>
             <input type="submit" value={"send"}/>
+            {error && <span style={{color: "red"}}>{error}</span>}  
         </form>
     )
 }
