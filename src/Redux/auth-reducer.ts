@@ -51,7 +51,6 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
             }
             dispatch(setError(res.data.messages[0]))
         }
-        
     } catch (e: any) {      
         throw new Error(e)
     }
