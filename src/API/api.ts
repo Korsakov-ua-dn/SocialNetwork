@@ -59,14 +59,19 @@ export const authApi = {
     authMe() {
         return instance.get<CommonType<{ id: number, login: string, email: string }>>(`auth/me`)
     },
-    login(email: string, password: string, rememberMe: boolean) {
-        return instance.post<CommonType<{userId: number}>>(`/auth/login`, {"email": email, "password": password, "rememberMe": rememberMe})
+    login(email: string, password: string, rememberMe: boolean, captcha: string | null = null) {
+        return instance.post<CommonType<{userId: number}>>(`/auth/login`, {"email": email, "password": password, "rememberMe": rememberMe, "captcha": captcha})
     },
     logout() {
         return instance.delete<CommonType>(`/auth/login`)
     },
 }
 
+export const securityApi = {
+    getCaptchaUrl() {
+        return instance.get<{url: string}>(`/security/get-captcha-url`)
+    },
+}
 
 // types
 type GetUsersType = {

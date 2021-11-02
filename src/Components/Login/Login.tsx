@@ -9,15 +9,17 @@ type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
+    captcha: string
 }
 
 type LoginFormPropsType = {
-    login: (email: string, password: string, rememberMe: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean, captcha: string) => void
+    captchaUrl: string | null
 }
 
 export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormDataType>();
-    const onSubmit: SubmitHandler<FormDataType> = data => props.login(data.email, data.password, data.rememberMe)
+    const onSubmit: SubmitHandler<FormDataType> = data => props.login(data.email, data.password, data.rememberMe, data.captcha)
     const onError = (errors: any, e: any) => console.log(errors, e);
 
     return (
@@ -38,13 +40,17 @@ export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
                 <label>{"remember me"}</label>
                 <input type={"checkbox"} {...register("rememberMe")} />
             </div>
-            
+            {props.captchaUrl && <div>
+                <label>{"anti-bot symbols"}</label>
+                <input  {...register("captcha", { required: true })} />
+                {errors.captcha && <span>field is required</span>}
+            </div>}
             
             <input type="submit" />
+            {props.captchaUrl && <img src={props.captchaUrl} alt="captcha"/>}
         </form>
     );
 }
-
 
 // const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 //     return (
@@ -69,19 +75,17 @@ export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
 const LoginContainer: React.FC<LoginContainerPropsType> = (props) => {
 
     if(props.auth.isAuth) return <Redirect to={"/Profile"}/>
-    console.log(props.auth.error);
     
-
     return <div>
-        <div>{props.auth.error.length ? props.auth.error: null}</div>
+        <div style={{color: "red"}}>{props.auth.error.length ? props.auth.error : null}</div>
         <h1> Login </h1>
-        <LoginForm login={props.login}/>
+        <LoginForm login={props.login} captchaUrl={props.auth.captchaUrl} />
     </div>
 }
 
 // types
 type mapStateToPropsType = {auth: AuthType}
-type mapDispatchToPropsType = {login: (email: string, password: string, rememberMe: boolean) => void}
+type mapDispatchToPropsType = {login: (email: string, password: string, rememberMe: boolean, captcha: string) => void}
 type LoginContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 

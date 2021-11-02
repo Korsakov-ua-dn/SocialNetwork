@@ -1,18 +1,20 @@
 import {AppThunkTypes} from './redux-store'
-import {authApi} from '../API/api'
+import {authApi, securityApi} from '../API/api'
 
 let initialState = {
     id: null as number | null,
     email: null as string | null,
     login: null as string | null,
     isAuth: false,
-    error: '' as string
+    error: '' as string,
+    captchaUrl: null as string | null,
 }
 
 const authReducer = (state: AuthType = initialState, action: AuthActionsType): AuthType => {
     switch (action.type) {
         case "auth/SET_ERROR":
         case "auth/SET_USER_DATA":
+        case "auth/SET_CAPTCHAURL":
             return {
                 ...state,
                 ...action.payload,
@@ -27,6 +29,7 @@ const authReducer = (state: AuthType = initialState, action: AuthActionsType): A
 export const setUserDataAC = (id: number | null, email: string| null, login: string| null, isAuth: boolean) => 
     ({type: "auth/SET_USER_DATA", payload: {id, email, login, isAuth}} as const)
 export const setError = (error: string) => ({type: "auth/SET_ERROR", payload: {error}} as const)
+export const setCaptchaUrl = (captchaUrl: string) => ({type: "auth/SET_CAPTCHAURL", payload: {captchaUrl}} as const)
 
 // thunks
 export const getAuthUserData = (): AppThunkTypes => async dispatch => {
@@ -37,13 +40,15 @@ export const getAuthUserData = (): AppThunkTypes => async dispatch => {
         dispatch(setUserDataAC(id, email, login, true))
     }
 } // асинхронная функция всегда автоматом возвращает промис!!!
-export const login = (email: string, password: string, rememberMe: boolean): AppThunkTypes => async dispatch => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunkTypes => async dispatch => {
     try {
-        const res = await authApi.login(email, password, rememberMe)
+        const res = await authApi.login(email, password, rememberMe, captcha)
         if(res.data.resultCode === 0) {
-            console.log(res)
             dispatch(getAuthUserData())
         } else {
+            if (res.data.resultCode === 10) {
+                dispatch(getCaptchaUrl())
+            }
             dispatch(setError(res.data.messages[0]))
         }
         
@@ -57,8 +62,13 @@ export const logout = (): AppThunkTypes => async dispatch => {
         dispatch(setUserDataAC(null, null, null, false))
     }
 }
-export const _login = (email: string, password: string, rememberMe: boolean): AppThunkTypes => dispatch => {
-    authApi.login(email, password, rememberMe)
+export const getCaptchaUrl = (): AppThunkTypes => async dispatch => {
+    const res = await securityApi.getCaptchaUrl()
+    dispatch(setCaptchaUrl(res.data.url))    
+}
+
+export const _login = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunkTypes => dispatch => {
+    authApi.login(email, password, rememberMe, captcha)
         .then(res => {
             if (res.data.resultCode === 0) {
                 console.log(res)
@@ -87,8 +97,8 @@ export const _getAuthUserData = (): AppThunkTypes => dispatch => {
 // types
 export type AuthType = typeof initialState
 
-export type AuthActionsType = 
-      ReturnType<typeof setUserDataAC> 
+export type AuthActionsType = ReturnType<typeof setUserDataAC> 
     | ReturnType<typeof setError>
-
+    | ReturnType<typeof setCaptchaUrl>
+    
 export default authReducer;
