@@ -1,5 +1,17 @@
 .personal_wrapper {
-    /* display: flex; */
+    display: flex;
+    margin-bottom: 15px;
+}
+.personal_wrapper b {
+    color: gray;
+    margin-bottom: 15px;
+}
+.avaWrapper {
+    width: 240px;
+    margin-right: 15px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 3px;
 }
 
 .ava_img {
@@ -8,9 +20,32 @@
     height: 200px;
     background-position: center;
     background-size: cover;
+    border-radius: 3px;
 }
 
 .description {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    padding: 15px;
+    background-color: white;
+    border-radius: 3px;
+}
+.fullName {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.opentowork {
+    margin-bottom: 5px;
+}
+.element {
+    display: flex;
+    margin-bottom: 5px;
+}
+.element span {
+    width: 200px;
+}
+.element b {
+    width: 100%;
 }

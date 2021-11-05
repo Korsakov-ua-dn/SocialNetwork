@@ -8,14 +8,22 @@ import {Dispatch} from 'redux'
 export type MyPostsPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => 
-    ({postsData: state.profilePage.postsData})
+    ({
+        postsData: state.profilePage.postsData,
+        photoSmall: state.profilePage.profile?.photos.small
+    })
 
 const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => 
     ({addPost: (newPostText: string) => dispatch(addPostAC(newPostText))})
 
-type mapStateToPropsType = {postsData: PostDataType[]}
-type mapDispatchToPropsType = {addPost: (newPostText: string) => void}
-
 const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 
-export default MyPostsContainer;
+export default MyPostsContainer
+
+//types
+
+type mapStateToPropsType = {
+    postsData: PostDataType[]
+    photoSmall: string | undefined
+}
+type mapDispatchToPropsType = {addPost: (newPostText: string) => void}

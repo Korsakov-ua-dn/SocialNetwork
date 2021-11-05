@@ -53,7 +53,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
             }
             return {
                 ...state,
-                postsData: [...state.postsData, newPost],
+                postsData: [newPost, ...state.postsData],
             }
         case "profile/SET_USER_PROFILE":
             return {...state, profile: action.profile}

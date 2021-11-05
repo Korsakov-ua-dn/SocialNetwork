@@ -29,27 +29,29 @@ class App extends React.Component<AppPropsType> {
 
     render() {
         return (
-            <div className={`${s.app_wrapper} container`}>
+            <>
                 <HeaderContainer/>
-                <Nav/>
-                <div className={s.app_wrapper_content}>
-                    <Switch>
-                        <Route exact path='/' render={() => <Redirect to="/profile" /> } />
-                        <Route path='/profile/:userId?' render={ () => withSuspense(ProfileContainer) }/>
-                        <Route path='/dialogs' render={ () => withSuspense(DialogsContainer) }/>
-                        <Route path='/users'
-                            render={() => <Suspense fallback={<div>Загрузка...</div>}>
-                            <UsersContainer />
-                        </Suspense>}/>
-                        <Route path='/news' component={News}/>
-                        <Route path='/music' component={Music}/>
-                        <Route path='/settings' component={Settings}/>
-                        <Route path='/login' render={() => withSuspense(LoginContainer) } />
-                        <Route path='*' render={() => <div>404 not found</div> } />
-                    </Switch>
+                <div className={s.app_wrapper}>
+                    <Nav/>
+                    <div className={s.app_wrapper_content}>
+                        <Switch>
+                            <Route exact path='/' render={() => <Redirect to="/profile" /> } />
+                            <Route path='/profile/:userId?' render={ () => withSuspense(ProfileContainer) }/>
+                            <Route path='/dialogs' render={ () => withSuspense(DialogsContainer) }/>
+                            <Route path='/users'
+                                render={() => <Suspense fallback={<div>Загрузка...</div>}>
+                                <UsersContainer />
+                            </Suspense>}/>
+                            <Route path='/news' component={News}/>
+                            <Route path='/music' component={Music}/>
+                            <Route path='/settings' component={Settings}/>
+                            <Route path='/login' render={() => withSuspense(LoginContainer) } />
+                            <Route path='*' render={() => <div>404 not found</div> } />
+                        </Switch>
+                    </div>
+                    <div style={{display: "none"}}>learn react</div> {/* need for App.test */}
                 </div>
-                <div style={{display: "none"}}>learn react</div> {/* need for App.test */}
-            </div>
+            </>
         )
     }
 }

@@ -54,6 +54,8 @@ export default compose<React.ComponentType>(
     withRouter,
 )(ProfileContainer)
 
+
+
 // types
 type mapStateToPropsType = {
     profile: ProfileType | null

@@ -38,9 +38,12 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
 
         return (
             <div className={s.personal_wrapper}>
-                <div style={avatarStyle} className={s.ava_img}/>
-                {isOwner && <input type={"file"} onChange={addAvatar}/>}
+                <div className={s.avaWrapper}>
+                    <div style={avatarStyle} className={s.ava_img}/>
+                    {isOwner && <input type={"file"} onChange={addAvatar}/>}
+                </div>
                 <div className={s.description}>
+                <b><ProfileStatusHooks status={status} updateUserStatus={updateUserStatus}/></b>
                     {
                         editMode
                             ? <ProfileForm profile={profile} updateDescription={updateDescription}
@@ -48,7 +51,7 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
                             : <ProfileData profile={profile} isOwner={isOwner}
                                            goToEditMode={() => setEditMode(true)}/>
                     }
-                    <b><ProfileStatusHooks status={status} updateUserStatus={updateUserStatus}/></b>
+                   
                 </div>
             </div>
         )
@@ -63,14 +66,27 @@ type ProfileDataType = {
 const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}) => {
     return (
         <>
-            {isOwner && <button onClick={goToEditMode}>edit</button>}
-            <h3>{profile?.fullName}</h3>
-            <span><b>Open to work: </b>{profile?.lookingForAJob ? "Yes" : "No"}</span>
-            <span><b>job description: </b>{profile?.lookingForAJobDescription}</span>
-            <span><b>aboutMe: </b>{profile?.aboutMe}</span>
-            <span><b>Contacts: </b>{Object.keys(profile.contacts).map(key => {
-                return <Contact key={key} title={key} value={profile.contacts[key as keyof ContactType]}/>
-            } )}</span>
+            <div className={s.fullName}>
+                <h3>{profile?.fullName}</h3>
+                {isOwner && <button onClick={goToEditMode}>Edit profile</button>}
+            </div>
+            <span className={s.opentowork}><b>{profile?.lookingForAJob ? "Open to work" : null}</b></span>
+            <hr/>
+            <div className={s.element}>
+                <span>Job description:</span><b>{profile?.lookingForAJobDescription}</b>
+            </div>
+            <hr/>
+            <div className={s.element}>
+                <span>About Me:</span><b>{profile?.aboutMe}</b>
+            </div>
+            <hr/>
+            <div className={s.element}>
+                <span>Contacts:</span>
+                <b>{Object.keys(profile.contacts).map(key => {
+                    return <Contact key={key} title={key} value={profile.contacts[key as keyof ContactType]}/>
+                })}</b>
+            </div>
+           
         </>
     )
 }
@@ -81,7 +97,7 @@ type ContactPropsType = {
 }
 const Contact: React.FC<ContactPropsType> = ({title, value}) => {
     return (
-        <div>
+        <div style={value ? {display: "block"} : {display: "none"}}>
             <b>{title}: </b>{value}
         </div>
     )

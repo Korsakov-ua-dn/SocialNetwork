@@ -3,6 +3,7 @@ import s from './Post.module.css';
 
 type propsType = {
     message?: string
+    photo: string | undefined
     likesCount: number
     id: number
 }
@@ -10,10 +11,9 @@ type propsType = {
 const Post = (props: propsType) => {
     return (
         <div className={s.post}>
-            <img
-                src="https://avatars.mds.yandex.net/get-zen_doc/1570751/pub_5fa2a2525dc59845ddab2eb2_5fa2a4ab5dfc942ad768ab44/scale_1200"
-                alt=""/>
-            <span>{props.message}</span> <span>Like</span> <span> {props.likesCount}</span>
+            <div className={s.ava} style={{background: `center / cover no-repeat url(${props.photo})`}} />
+            <div>{props.message}</div>
+            <span>Like</span> <span> {props.likesCount}</span>
         </div>
     )
 }

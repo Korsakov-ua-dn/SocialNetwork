@@ -33,9 +33,9 @@ const MyPostForm: React.FC<PropsType> = (props) => {
     </form>
 }
 
-const MyPosts = ({postsData, addPost}: MyPostsPropsType) => {
-    
-    let postItems = postsData.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
+const MyPosts = ({postsData, addPost, photoSmall}: MyPostsPropsType) => {
+
+    let postItems = postsData.map(p => <Post key={p.id} id={p.id} photo={photoSmall} message={p.message} likesCount={p.likesCount}/>)
 
     return (
         <div>
