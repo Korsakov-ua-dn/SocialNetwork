@@ -16,15 +16,15 @@ import {compose} from 'redux'
 import {DescriptionDataType} from "./ProfileInfo/ProfileInfo";
 
 class ProfileContainer extends React.Component<PropsType> {
-
+    
     identifyUser() {
-        let userId = this.props.match.params.userId
-        if (!userId) {
-            if (this.props.userId) userId = this.props.userId.toString()
-            else this.props.history.push("/login")
+        let userId = this.props.match.params.userId || this.props.userId?.toString()
+        if (userId) {
+            this.props.getUserProfile(userId)
+            this.props.getUserStatus(userId)
+        } else {
+            this.props.history.push("/login")
         }
-        this.props.getUserProfile(userId)
-        this.props.getUserStatus(userId)
     }
 
     componentDidMount() {

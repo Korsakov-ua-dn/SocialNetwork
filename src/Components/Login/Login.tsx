@@ -73,11 +73,10 @@ export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
 // const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
 const LoginContainer: React.FC<LoginContainerPropsType> = (props) => {
-
     if(props.auth.isAuth) return <Redirect to={"/Profile"}/>
     
     return <div>
-        <div style={{color: "red"}}>{props.auth.error.length ? props.auth.error : null}</div>
+        <div style={{color: "red"}}>{!!props.auth.error ? props.auth.error : null}</div>
         <h1> Login </h1>
         <LoginForm login={props.login} captchaUrl={props.auth.captchaUrl} />
     </div>

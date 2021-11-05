@@ -48,7 +48,7 @@ class App extends React.Component<AppPropsType> {
                         <Route path='*' render={() => <div>404 not found</div> } />
                     </Switch>
                 </div>
-                <div style={{display: "none"}}>learn react</div>
+                <div style={{display: "none"}}>learn react</div> {/* need for App.test */}
             </div>
         )
     }

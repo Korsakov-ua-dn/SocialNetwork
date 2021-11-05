@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux'
-import {userApi, profileApi} from '../API/api'
+import {profileApi} from '../API/api'
 import {AppStateType, AppThunkTypes} from "./redux-store";
 import {DescriptionDataType} from "../Components/MainContent/Profile/ProfileInfo/ProfileInfo";
 
@@ -81,7 +81,7 @@ export const setAvatarAC = (photo: PhotosType) => ({type: "profile/SET_AVATAR", 
 
 // thunks
 export const getUserProfile = (userId: string) => async (dispatch: Dispatch) => {
-    const response = await userApi.getProfile(userId)
+    const response = await profileApi.getProfile(userId)
     dispatch(setUserProfileAC(response.data))
 }
 export const getUserStatus = (userId: string) => (dispatch: Dispatch) => {

@@ -19,7 +19,6 @@ const authReducer = (state: AuthType = initialState, action: AuthActionsType): A
                 ...state,
                 ...action.payload,
             }
-        
         default:
             return state;
     }
@@ -33,11 +32,14 @@ export const setCaptchaUrl = (captchaUrl: string) => ({type: "auth/SET_CAPTCHAUR
 
 // thunks
 export const getAuthUserData = (): AppThunkTypes => async dispatch => {
-    const response = await authApi.authMe()
-        
-    if (response.data.resultCode === 0) {
-        let {id, email, login} = response.data.data
-        dispatch(setUserDataAC(id, email, login, true))
+    try {
+        const response = await authApi.authMe()
+        if (response.data.resultCode === 0) {
+            let {id, email, login} = response.data.data
+            dispatch(setUserDataAC(id, email, login, true))
+        }
+    } catch (e: any) {
+        dispatch(setError(e.message))
     }
 } // асинхронная функция всегда автоматом возвращает промис!!!
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunkTypes => async dispatch => {
@@ -51,8 +53,8 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
             }
             dispatch(setError(res.data.messages[0]))
         }
-    } catch (e: any) {      
-        throw new Error(e)
+    } catch (e: any) { 
+        dispatch(setError(e.message))
     }
 }
 export const logout = (): AppThunkTypes => async dispatch => {
