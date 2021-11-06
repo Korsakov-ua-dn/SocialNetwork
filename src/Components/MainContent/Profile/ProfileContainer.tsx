@@ -13,7 +13,7 @@ import {
 import {withRouter} from 'react-router-dom'
 import {RouteComponentProps} from 'react-router'
 import {compose} from 'redux'
-import {DescriptionDataType} from "./ProfileInfo/ProfileInfo";
+import {DescriptionDataType} from "./ProfileInfo/UpdateDescriptionForm/UpdateDescriptionForm";
 
 class ProfileContainer extends React.Component<PropsType> {
     

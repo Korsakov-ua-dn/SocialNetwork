@@ -1,15 +1,16 @@
 .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
     background-color: white;
 }
-.header img {
+.header a, img {
     height: 60px;
 }
-
 .loginBlock {
-    float: right;
+    margin-right: 15px;
 }
-
 .loginBlock a {
     color: black;
 }
