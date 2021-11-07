@@ -1,9 +1,11 @@
 import React from 'react'
-import {connect} from "react-redux";
-import {AuthType, login} from "../../Redux/auth-reducer";
-import {AppStateType} from "../../Redux/store";
-import {Redirect} from "react-router-dom";
-import { SubmitHandler, useForm } from 'react-hook-form';
+import {connect} from "react-redux"
+import {AuthType, login} from "../../Redux/auth-reducer"
+import {AppStateType} from "../../Redux/store"
+import {Redirect} from "react-router-dom"
+import {SubmitHandler, useForm} from 'react-hook-form'
+import s from './Login.module.css'
+import cn from "classnames"
 
 type FormDataType = {
     email: string
@@ -18,36 +20,34 @@ type LoginFormPropsType = {
 }
 
 export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormDataType>();
+    const {register, handleSubmit, formState: {errors}} = useForm<FormDataType>();
     const onSubmit: SubmitHandler<FormDataType> = data => props.login(data.email, data.password, data.rememberMe, data.captcha)
     const onError = (errors: any, e: any) => console.log(errors, e);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-            <div>
-                <label>{"email"}</label>
-                <input  {...register("email", { required: true })} />
+        <form className={s.form} onSubmit={handleSubmit(onSubmit, onError)}>
+            <div className={s.item}>
+                <span>{"email"}</span>
+                <input  {...register("email", {required: true})} />
                 {errors.email && <span>email is required</span>}
             </div>
-
-            <div>
-                <label>{"password"}</label>
-                <input type={"password"} {...register("password", { required: true })} />
+            <div className={s.item}>
+                <span>{"password"}</span>
+                <input type={"password"} {...register("password", {required: true})} />
                 {errors.password && <span>password is required</span>}
             </div>
-
-            <div>
-                <label>{"remember me"}</label>
-                <input type={"checkbox"} {...register("rememberMe")} />
+            <div className={s.item}>
+                <span>{"remember me"}</span>
+                <input className={s.checkbox} type={"checkbox"} {...register("rememberMe")} />
             </div>
-            {props.captchaUrl && <div>
-                <label>{"anti-bot symbols"}</label>
-                <input  {...register("captcha", { required: true })} />
-                {errors.captcha && <span>field is required</span>}
+            {props.captchaUrl && <div className={s.item}>
+                <span>{"anti-bot symbols"}</span>
+                <input {...register("captcha", {required: true})}
+                       className={cn(s.inputCaptcha, {[s.errorCaptcha]: errors.captcha})}/>
             </div>}
-            
-            <input type="submit" />
-            {props.captchaUrl && <img src={props.captchaUrl} alt="captcha"/>}
+
+            <input className={s.btnSubmit} type="submit"/>
+            {props.captchaUrl && <img className={s.captchaImg} src={props.captchaUrl} alt="captcha"/>}
         </form>
     );
 }
@@ -73,18 +73,18 @@ export const LoginForm: React.FC<LoginFormPropsType> = (props) => {
 // const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
 const LoginContainer: React.FC<LoginContainerPropsType> = (props) => {
-    if(props.auth.isAuth) return <Redirect to={"/Profile"}/>
-    
-    return <div>
-        <div style={{color: "red"}}>{!!props.auth.error ? props.auth.error : null}</div>
+    if (props.auth.isAuth) return <Redirect to={"/Profile"}/>
+
+    return <div className={s.loginWrapper}>
         <h1> Login </h1>
-        <LoginForm login={props.login} captchaUrl={props.auth.captchaUrl} />
+        <LoginForm login={props.login} captchaUrl={props.auth.captchaUrl}/>
+        <div style={{color: "red"}}>{!!props.auth.error ? props.auth.error : null}</div>
     </div>
 }
 
 // types
-type mapStateToPropsType = {auth: AuthType}
-type mapDispatchToPropsType = {login: (email: string, password: string, rememberMe: boolean, captcha: string) => void}
+type mapStateToPropsType = { auth: AuthType }
+type mapDispatchToPropsType = { login: (email: string, password: string, rememberMe: boolean, captcha: string) => void }
 type LoginContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 

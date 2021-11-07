@@ -3,13 +3,12 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    padding: 3px 15px 3px 3px;
     background-color: white;
 }
 .header a, img {
     height: 60px;
-}
-.loginBlock {
-    margin-right: 15px;
+    border-radius: 50%;
 }
 .loginBlock a {
     color: black;

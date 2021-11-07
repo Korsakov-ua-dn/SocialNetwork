@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 // import s from './ProfileInfo.module.css';
 
 type ProfileStatusPropsType = {
@@ -10,7 +10,7 @@ const ProfileStatusHooks: React.FC<ProfileStatusPropsType> = ({status, updateUse
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [localValue, setLocalValue] = useState<string>(status)
-    
+
     const activateEditMode = () => {
         setEditMode(true)
     }
@@ -22,7 +22,9 @@ const ProfileStatusHooks: React.FC<ProfileStatusPropsType> = ({status, updateUse
         setLocalValue(e.currentTarget.value)
     }
 
-    useEffect(() => { setLocalValue(status) }, [status])
+    useEffect(() => {
+        setLocalValue(status)
+    }, [status])
 
     // componentDidUpdate(prevProps: ProfileStatusPropsType, prevState: StateType) {
     //     if(prevProps.status !== this.props.status) {
@@ -36,16 +38,16 @@ const ProfileStatusHooks: React.FC<ProfileStatusPropsType> = ({status, updateUse
     return (
         <div className={''}>
             {!editMode &&
-                <div>
-                    <span onDoubleClick={activateEditMode}>{status || "status is not defined"}</span>
-                </div>
+            <div>
+                <span onDoubleClick={activateEditMode}>{status || "status is not defined"}</span>
+            </div>
             }
-            {editMode && 
-                <div>
-                    <input autoFocus onBlur={activateViewMode} 
-                            onChange={onStatusChange}
-                            value={localValue} type="text" />
-                </div>
+            {editMode &&
+            <div>
+                <input autoFocus onBlur={activateViewMode}
+                       onChange={onStatusChange}
+                       value={localValue} type="text"/>
+            </div>
             }
         </div>
     )

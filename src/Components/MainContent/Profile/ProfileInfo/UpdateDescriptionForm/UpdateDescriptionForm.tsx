@@ -47,9 +47,9 @@ export const UpdateDescriptionForm: React.FC<PropsType> = (
                 <span>Full Name</span>
                 <b>
                     <input placeholder={"full name"} {...register("fullName",
-                    {
-                        required: true
-                    } ) } />
+                        {
+                            required: true
+                        })} />
                     {errors.fullName?.type === "required" && <span>Field is required</span>}
                 </b>
             </div>
@@ -76,7 +76,7 @@ export const UpdateDescriptionForm: React.FC<PropsType> = (
                     {errors.aboutMe?.type === "required" && <span>Field is required</span>}
                 </b>
             </div>
-            <div className={ cn(s.element, s.contacts) }>
+            <div className={cn(s.element, s.contacts)}>
                 <span>contacts</span><br/>
                 <b>
                     {Object.keys(profile.contacts).map(key => {

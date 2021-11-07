@@ -20,6 +20,7 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
     activateEditMode() {
         this.setState({editMode: true})
     }
+
     activateViewMode = () => {
         this.setState({editMode: false})
         this.props.updateUserStatus(this.state.status)
@@ -31,7 +32,7 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
     }
 
     componentDidUpdate(prevProps: ProfileStatusPropsType, prevState: StateType) {
-        if(prevProps.status !== this.props.status) {
+        if (prevProps.status !== this.props.status) {
             this.setState({
                 status: this.props.status
             })
@@ -43,16 +44,17 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         return (
             <div className={''}>
                 {!this.state.editMode &&
-                    <div>
-                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status || "status is not defined"}</span>
-                    </div>
+                <div>
+                    <span
+                        onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status || "status is not defined"}</span>
+                </div>
                 }
-                {this.state.editMode && 
-                    <div>
-                        <input autoFocus onBlur={this.activateViewMode} 
-                                onChange={this.onStatusChange}
-                                value={this.state.status} type="text" />
-                    </div>
+                {this.state.editMode &&
+                <div>
+                    <input autoFocus onBlur={this.activateViewMode}
+                           onChange={this.onStatusChange}
+                           value={this.state.status} type="text"/>
+                </div>
                 }
             </div>
         )

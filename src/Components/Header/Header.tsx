@@ -7,7 +7,7 @@ const Header = (props: HeaderContainerPropsType) => {
 
     return (
         <header className={s.header}>
-            <NavLink to={'/'} >
+            <NavLink to={'/'}>
                 <img
                     src="https://res.cloudinary.com/teepublic/image/private/s--iRHIjqP9--/t_Preview/b_rgb:191919,c_limit,f_auto,h_630,q_90,w_630/v1463168513/production/designs/511305_1.jpg"
                     alt=""

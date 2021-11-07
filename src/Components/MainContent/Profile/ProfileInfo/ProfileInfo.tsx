@@ -40,13 +40,13 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
             <div className={s.personal_wrapper}>
                 <div className={s.avaWrapper}>
                     <div style={avatarStyle} className={s.ava_img}>
-                    {
-                        isOwner &&
-                        <>
-                            <input className={s.uploadInput} type={"file"} onChange={addAvatar}/>
-                            <label className={s.uploadLabel}> </label>
-                        </>
-                }
+                        {
+                            isOwner &&
+                            <>
+                                <input className={s.uploadInput} type={"file"} onChange={addAvatar}/>
+                                <label className={s.uploadLabel}> </label>
+                            </>
+                        }
                     </div>
                 </div>
                 <div className={s.description}>
@@ -58,7 +58,6 @@ const ProfileInfo: React.FC<ProfileContainerPropsType & AddPropsType> = (
                             : <ProfileDescription profile={profile} isOwner={isOwner}
                                                   goToEditMode={() => setEditMode(true)}/>
                     }
-
                 </div>
             </div>
         )

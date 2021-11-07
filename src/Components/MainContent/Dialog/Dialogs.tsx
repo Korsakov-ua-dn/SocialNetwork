@@ -3,7 +3,7 @@ import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
 import {DialogsPropsType} from './DialogsContainer'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import {SubmitHandler, useForm} from 'react-hook-form'
 
 type FormDataType = {
     newMessageBody: string
@@ -14,24 +14,24 @@ type PropsType = {
 
 const DialogsForm: React.FC<PropsType> = (props) => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormDataType>();
+    const {register, handleSubmit, formState: {errors}} = useForm<FormDataType>();
     const onSubmit: SubmitHandler<FormDataType> = data => props.sendMessage(data.newMessageBody)
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={s.sendWrapper}>
             <div>
-                <textarea 
-                    {...register("newMessageBody", 
-                        { 
+                <textarea
+                    {...register("newMessageBody",
+                        {
                             required: true,
-                            maxLength : {
+                            maxLength: {
                                 value: 10,
                                 message: 'max length 10'
-                            } 
+                            }
                         })
                     }
                     placeholder='Enter message'/>
-                <input type="submit" value={"send"} />
+                <input type="submit" value={"send"}/>
             </div>
             {errors.newMessageBody?.type === "required" && <span>Field is required</span>}
             {errors.newMessageBody?.message && <span>{errors.newMessageBody.message}</span>}

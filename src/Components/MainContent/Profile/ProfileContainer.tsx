@@ -16,7 +16,7 @@ import {DescriptionDataType} from "./ProfileInfo/UpdateDescriptionForm/UpdateDes
 import {ProfileType} from "../../../API/api";
 
 class ProfileContainer extends React.Component<PropsType> {
-    
+
     identifyUser() {
         let userId = this.props.match.params.userId || this.props.userId?.toString()
         if (userId) {
@@ -32,7 +32,8 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: {}, snapshot: any) {
-        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId
+            || this.props.userId !== prevProps.userId) {
             this.identifyUser()
         }
     }
@@ -53,7 +54,6 @@ export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus, updateAvatar, updateDescription}),
     withRouter,
 )(ProfileContainer)
-
 
 
 // types

@@ -28,7 +28,7 @@ const authReducer = (state: AuthType = initialState, action: AuthActionsType): A
 export const setUserDataAC = (id: number | null, email: string| null, login: string| null, isAuth: boolean) => 
     ({type: "auth/SET_USER_DATA", payload: {id, email, login, isAuth}} as const)
 export const setError = (error: string) => ({type: "auth/SET_ERROR", payload: {error}} as const)
-export const setCaptchaUrl = (captchaUrl: string) => ({type: "auth/SET_CAPTCHAURL", payload: {captchaUrl}} as const)
+export const setCaptchaUrl = (captchaUrl: string | null) => ({type: "auth/SET_CAPTCHAURL", payload: {captchaUrl}} as const)
 
 // thunks
 export const getAuthUserData = (): AppThunkTypes => async dispatch => {
@@ -47,6 +47,8 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
         const res = await authApi.login(email, password, rememberMe, captcha)
         if(res.data.resultCode === 0) {
             dispatch(getAuthUserData())
+            dispatch(setCaptchaUrl(null))
+            dispatch(setError(''))
         } else {
             if (res.data.resultCode === 10) {
                 dispatch(getCaptchaUrl())

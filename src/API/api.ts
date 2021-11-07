@@ -9,7 +9,6 @@ const instance = axios.create({
     },
 })
 
-
 export const userApi = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}`)
@@ -51,14 +50,19 @@ export const profileApi = {
     updateDescription(data: DescriptionDataType) {
         return instance.put(`/profile`, {...data})
     },
-}   
+}
 
 export const authApi = {
     authMe() {
         return instance.get<CommonType<{ id: number, login: string, email: string }>>(`auth/me`)
     },
     login(email: string, password: string, rememberMe: boolean, captcha: string | null = null) {
-        return instance.post<CommonType<{userId: number}>>(`/auth/login`, {"email": email, "password": password, "rememberMe": rememberMe, "captcha": captcha})
+        return instance.post<CommonType<{ userId: number }>>(`/auth/login`, {
+            "email": email,
+            "password": password,
+            "rememberMe": rememberMe,
+            "captcha": captcha
+        })
     },
     logout() {
         return instance.delete<CommonType>(`/auth/login`)
@@ -67,7 +71,7 @@ export const authApi = {
 
 export const securityApi = {
     getCaptchaUrl() {
-        return instance.get<{url: string}>(`/security/get-captcha-url`)
+        return instance.get<{ url: string }>(`/security/get-captcha-url`)
     },
 }
 

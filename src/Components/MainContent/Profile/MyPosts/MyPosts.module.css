@@ -1,3 +1,5 @@
-.content input {
-    display: block;
+.btnPost {
+    width: 100px;
+    float: right;
+    margin-bottom: 10px;
 }
