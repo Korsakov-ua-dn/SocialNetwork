@@ -1,6 +1,6 @@
-import {ContactType, ProfileType} from "../../../../../Redux/profile-reducer";
 import React from "react";
 import s from "../ProfileInfo.module.css";
+import {ContactType, ProfileType} from "../../../../../API/api";
 
 type ProfileDescriptionType = {
     profile: ProfileType

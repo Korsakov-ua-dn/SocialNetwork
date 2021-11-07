@@ -1,8 +1,8 @@
-import {ContactType, ProfileType} from "../../../../../Redux/profile-reducer";
 import React, {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import s from "../ProfileInfo.module.css";
 import cn from "classnames";
+import {ContactType, ProfileType} from "../../../../../API/api";
 
 type PropsType = {
     profile: ProfileType

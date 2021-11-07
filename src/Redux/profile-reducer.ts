@@ -1,37 +1,7 @@
 import {Dispatch} from 'redux'
-import {profileApi} from '../API/api'
+import {PhotosType, profileApi, ProfileType} from '../API/api'
 import {AppStateType, AppThunkTypes} from "./store";
 import {DescriptionDataType} from "../Components/MainContent/Profile/ProfileInfo/UpdateDescriptionForm/UpdateDescriptionForm";
-
-export type PostDataType = {
-    id: number
-    message: string
-    likesCount: number
-}
-export type ContactType = {
-    facebook: string | null
-    github: string | null
-    instagram: string | null
-    mainLink: string | null
-    twitter: string | null
-    vk: string | null
-    website: string | null
-    youtube: string | null
-}
-type PhotosType = {
-    small: string
-    large: string
-}
-export type ProfileType = {
-    aboutMe: string | null
-    userId: number
-    lookingForAJob: boolean
-    lookingForAJobDescription: string | null
-    fullName: string
-    contacts: ContactType
-    photos: PhotosType
-}
-export type ProfilePageType = typeof initialState
 
 let initialState = {
     postsData: [
@@ -43,7 +13,6 @@ let initialState = {
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
-
     switch (action.type) {
         case "profile/ADD-POST":
             let newPost: PostDataType = {
@@ -107,7 +76,7 @@ export const updateAvatar = (photo: any) => (dispatch: Dispatch) => {
 export const updateDescription = (data: DescriptionDataType): AppThunkTypes => async (dispatch, getState: () => AppStateType) => {
     const userId = getState().auth.id?.toString()
     const res = await profileApi.updateDescription(data)
-   
+
     if (res.data.resultCode === 0) {
         if (userId) dispatch(getUserProfile(userId))
     } else {
@@ -116,13 +85,17 @@ export const updateDescription = (data: DescriptionDataType): AppThunkTypes => a
 }
 
 // types
+export type PostDataType = {
+    id: number
+    message: string
+    likesCount: number
+}
+export type ProfilePageType = typeof initialState
 export type ProfileActionType = ReturnType<typeof addPostAC>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setStatusAC>
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof setAvatarAC>
-
-
 
 export default profileReducer;

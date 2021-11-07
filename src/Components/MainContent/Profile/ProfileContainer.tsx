@@ -8,12 +8,12 @@ import {
     getUserStatus,
     updateAvatar,
     updateDescription,
-    ProfileType,
 } from '../../../Redux/profile-reducer'
 import {withRouter} from 'react-router-dom'
 import {RouteComponentProps} from 'react-router'
 import {compose} from 'redux'
 import {DescriptionDataType} from "./ProfileInfo/UpdateDescriptionForm/UpdateDescriptionForm";
+import {ProfileType} from "../../../API/api";
 
 class ProfileContainer extends React.Component<PropsType> {
     

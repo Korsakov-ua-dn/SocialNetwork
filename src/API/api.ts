@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {ProfileType} from '../Redux/profile-reducer'
 import {DescriptionDataType} from "../Components/MainContent/Profile/ProfileInfo/UpdateDescriptionForm/UpdateDescriptionForm";
 
 const instance = axios.create({
@@ -79,7 +78,7 @@ export type CommonType<T = {}> = {
     fieldsErrors: []
     resultCode: number
 }
-type PhotosType = {
+export type PhotosType = {
     small: string
     large: string
 }
@@ -95,4 +94,23 @@ type GetUsersType = {
     error: null | string
     items: UserDataType[]
     totalCount: number
+}
+export type ContactType = {
+    facebook: string | null
+    github: string | null
+    instagram: string | null
+    mainLink: string | null
+    twitter: string | null
+    vk: string | null
+    website: string | null
+    youtube: string | null
+}
+export type ProfileType = {
+    aboutMe: string | null
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string | null
+    fullName: string
+    contacts: ContactType
+    photos: PhotosType
 }
