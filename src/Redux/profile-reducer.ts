@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux'
 import {profileApi} from '../API/api'
-import {AppStateType, AppThunkTypes} from "./redux-store";
+import {AppStateType, AppThunkTypes} from "./store";
 import {DescriptionDataType} from "../Components/MainContent/Profile/ProfileInfo/UpdateDescriptionForm/UpdateDescriptionForm";
 
 export type PostDataType = {

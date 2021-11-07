@@ -1,4 +1,4 @@
-import { AppThunkTypes } from './redux-store'
+import { AppThunkTypes } from './store'
 import { getAuthUserData } from './auth-reducer'
 
 let initialState = {

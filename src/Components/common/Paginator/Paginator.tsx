@@ -1,4 +1,4 @@
-import { useState } from "react"
+import {useState} from "react"
 import s from "./Paginator.module.css"
 import cn from 'classnames'
 
@@ -18,7 +18,7 @@ export const Paginator: React.FC<PropsType> = (
         onPageChanged,
         portionSize,
     }
-) => { 
+) => {
     let pagesCount = Math.ceil(totalCount / pageSize)
     let pages = []
 
@@ -28,22 +28,28 @@ export const Paginator: React.FC<PropsType> = (
 
     const portionCount = Math.ceil(pagesCount / portionSize)
     const [currentPortion, setCurrentPortion] = useState<number>(1)
-    let leftPortionPageNumber = (currentPortion*portionSize)-portionSize+1
-    let rightPortionPageNumber = currentPortion*portionSize
+    let leftPortionPageNumber = (currentPortion * portionSize) - portionSize + 1
+    let rightPortionPageNumber = currentPortion * portionSize
 
     return (
-        <div>
-            { leftPortionPageNumber > 1 && <button onClick={() => setCurrentPortion(currentPortion - 1)}> prev </button> }
-            {   
+        <div className={s.wrapper}>
+            {leftPortionPageNumber > 1 && <button
+                onClick={() => setCurrentPortion(currentPortion - 1)}
+                    className={s.btnPrev}
+            >prev</button>}
+            {
                 pages
-                    .filter(p => p >= leftPortionPageNumber && p <=rightPortionPageNumber )
+                    .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                     .map(p => <span
-                    key={p}
-                    className={ cn(s.page, {[s.selectedPage]: currentPage === p}) }
-                    onClick={() => onPageChanged(p)}
-                >{p} </span>)
+                        key={p}
+                        className={cn(s.page, {[s.selectedPage]: currentPage === p})}
+                        onClick={() => onPageChanged(p)}
+                    >{p} </span>)
             }
-            { currentPortion < portionCount && <button onClick={() => setCurrentPortion(currentPortion + 1)}> next </button> }
+            {currentPortion < portionCount && <button
+                onClick={() => setCurrentPortion(currentPortion + 1)}
+                className={s.btnNext}
+            >next</button>}
         </div>
     )
 }

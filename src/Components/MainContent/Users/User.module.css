@@ -1,15 +1,32 @@
 .userWrapper {
+    width: 500px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
-
+.dataWrapper {
+    display: flex;
+    align-items: center;
+}
 .avatar {
     display: inline-block;
     width: 50px;
     height: 50px;
 }
 
-.avatar img {
+.avatar a, img {
     width: 100%;
+    height: 100%;
     border-radius: 50%;
+}
+.descr {
+    margin-left: 20px;
+}
+.descr .status {
+    opacity: 0.8;
+    font-size: 14px;
+}
+.btnFollow {
+    width: 100px;
 }

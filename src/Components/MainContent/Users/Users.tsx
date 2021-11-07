@@ -1,7 +1,7 @@
-import {UserDataType} from '../../../Redux/users-reducer'
 import {Paginator} from '../../common/Paginator/Paginator'
 import User from './User'
 import React from "react"
+import {UserDataType} from "../../../API/api"
 
 type UsersPropsType = {
     users: Array<UserDataType>
@@ -35,7 +35,8 @@ const Users: React.FC<UsersPropsType> = (
                 pageSize={pageSize}
                 currentPage={currentPage}
                 onPageChanged={onPageChanged}
-                portionSize={20}/>
+                portionSize={20}
+            />
             {
                 users.map(u => <User key={u.id}
                                      user={u}

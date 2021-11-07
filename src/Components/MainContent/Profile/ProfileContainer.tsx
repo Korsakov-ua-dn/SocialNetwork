@@ -1,7 +1,7 @@
 import React from 'react'
 import Profile from './Profile'
 import {connect} from 'react-redux'
-import {AppStateType} from '../../../Redux/redux-store'
+import {AppStateType} from '../../../Redux/store'
 import {
     getUserProfile,
     updateUserStatus,

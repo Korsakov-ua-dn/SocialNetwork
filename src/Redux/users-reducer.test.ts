@@ -91,5 +91,4 @@ test('Change follow to true', () => {
     });
     expect(endState["users"].every(u => u.followed)).toBeTruthy();
     expect(endState["users"][0].followed).toBe(true);
-
 });

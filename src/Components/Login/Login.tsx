@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from "react-redux";
 import {AuthType, login} from "../../Redux/auth-reducer";
-import {AppStateType} from "../../Redux/redux-store";
+import {AppStateType} from "../../Redux/store";
 import {Redirect} from "react-router-dom";
 import { SubmitHandler, useForm } from 'react-hook-form';
 

@@ -1,4 +1,5 @@
 import preloader from "../../../assets/img/Spin-1s-200px.svg"
+import s from "./Preloader.module.css"
 
 type PreloaderPropsType = {
     isFetching: boolean
@@ -7,7 +8,7 @@ type PreloaderPropsType = {
 const Preloader = (props: PreloaderPropsType) => {
     return (
         <div>
-            {props.isFetching ? <img src={preloader} alt="spinner"/> : null}
+            {props.isFetching ? <img className={s.preloaderImg} src={preloader} alt="spinner"/> : null}
         </div>
     )
 }

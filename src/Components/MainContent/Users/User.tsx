@@ -1,7 +1,8 @@
-import style from './User.module.css'
-import avatar from '../../../assets/img/null-avatar-icon.jpg'
-import { UserDataType } from '../../../Redux/users-reducer'
-import { NavLink } from 'react-router-dom'
+import s from './User.module.css'
+import avatar from '../../../assets/img/null-avatar-icon.png'
+import {NavLink} from 'react-router-dom'
+import {UserDataType} from "../../../API/api"
+import React from "react"
 
 type UsersPropsType = {
     user: UserDataType
@@ -20,27 +21,31 @@ const User: React.FC<UsersPropsType> = (
 ) => {
 
     return (
-        <div className={style.userWrapper}>
-            <div>
-                <div className={style.avatar}>
+        <div className={s.userWrapper}>
+            <div className={s.dataWrapper}>
+                <div className={s.avatar}>
                     <NavLink to={"/profile/" + user.id}>
                         <img src={user.photos.small ? user.photos.small : avatar} alt="userAvatar"/>
                     </NavLink>
                 </div>
-                {user.followed
-                    ? <button disabled={isFollowingProgress.some(id => id === user.id)}
-                                onClick={() => {unfollow(user.id)} }>UNFOLLOW</button>
-
-                    : <button disabled={isFollowingProgress.some(id => id === user.id)}
-                                onClick={() => {follow(user.id)} }>FOLLOW</button>
-                }
-            </div>
-            <div>
-                <div>
-                    <span>{user.name}</span> <span>{'"u.location.country" + ", " + "u.location.city"'}</span>
+                <div className={s.descr}>
+                    <b><div>{user.name}</div></b>
+                    <div className={s.status}>{user.status}</div>
                 </div>
-                <span>{user.status}</span>
             </div>
+            {user.followed
+                ? <button disabled={isFollowingProgress.some(id => id === user.id)}
+                          className={s.btnFollow}
+                          onClick={() => {
+                              unfollow(user.id)
+                          }}>unfollow</button>
+
+                : <button disabled={isFollowingProgress.some(id => id === user.id)}
+                          className={s.btnFollow}
+                          onClick={() => {
+                              follow(user.id)
+                          }}>follow</button>
+            }
         </div>
     )
 }

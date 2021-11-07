@@ -1,5 +1,5 @@
 import Dialogs from './Dialogs'
-import {AppStateType} from '../../../Redux/redux-store';
+import {AppStateType} from '../../../Redux/store';
 import {sendMessageAC, DialogType, MessageType} from '../../../Redux/dialogs-reducer'
 import {compose, Dispatch} from 'redux'
 import {connect} from 'react-redux'

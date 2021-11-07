@@ -1,4 +1,4 @@
-import {AppThunkTypes} from './redux-store'
+import {AppThunkTypes} from './store'
 import {authApi, securityApi} from '../API/api'
 
 let initialState = {

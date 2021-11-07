@@ -1,4 +1,4 @@
-import {RootAppActionsType} from "./redux-store";
+import {RootAppActionsType} from "./store";
 
 type SidebarPageType = typeof initialState
 

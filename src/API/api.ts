@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {UserDataType} from '../Redux/users-reducer'
 import {ProfileType} from '../Redux/profile-reducer'
 import {DescriptionDataType} from "../Components/MainContent/Profile/ProfileInfo/UpdateDescriptionForm/UpdateDescriptionForm";
 
@@ -74,15 +73,26 @@ export const securityApi = {
 }
 
 // types
-type GetUsersType = {
-    error: null | string
-    items: UserDataType[]
-    totalCount: number
-}
-
 export type CommonType<T = {}> = {
     data: T
     messages: Array<string>
     fieldsErrors: []
     resultCode: number
+}
+type PhotosType = {
+    small: string
+    large: string
+}
+export type UserDataType = {
+    id: number
+    photos: PhotosType
+    followed: boolean
+    name: string
+    status: string
+    uniqueUrlName: null
+}
+type GetUsersType = {
+    error: null | string
+    items: UserDataType[]
+    totalCount: number
 }

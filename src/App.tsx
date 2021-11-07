@@ -8,9 +8,10 @@ import Music from './Components/MainContent/Music/Music'
 import Settings from './Components/MainContent/Settings/Settings'
 import { connect, Provider } from 'react-redux'
 import {initializeApp} from './Redux/app-reducer'
-import store, {AppStateType} from './Redux/redux-store'
+import store, {AppStateType} from './Redux/store'
 import { withSuspense } from './hoc/withSuspense'
 import { compose } from 'redux'
+import Preloader from "./Components/common/Preloader/Preloader";
 
 // const ProfileContainer = withSuspense(React.lazy(() => import('./Components/MainContent/Profile/ProfileContainer')))
 // ленивая загрузка + пропсы прокидываем в компоненту в render () => <ProfileContainer/>
@@ -39,7 +40,7 @@ class App extends React.Component<AppPropsType> {
                             <Route path='/profile/:userId?' render={ () => withSuspense(ProfileContainer) }/>
                             <Route path='/dialogs' render={ () => withSuspense(DialogsContainer) }/>
                             <Route path='/users'
-                                render={() => <Suspense fallback={<div>Загрузка...</div>}>
+                                render={() => <Suspense fallback={<Preloader isFetching={true}/>}>
                                 <UsersContainer />
                             </Suspense>}/>
                             <Route path='/news' component={News}/>

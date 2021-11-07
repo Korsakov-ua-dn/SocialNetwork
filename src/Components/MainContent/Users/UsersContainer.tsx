@@ -1,10 +1,9 @@
 import {connect} from 'react-redux'
-import {AppStateType} from '../../../Redux/redux-store'
-import {requestUsers, follow, unfollow, UserDataType} from '../../../Redux/users-reducer'
+import {AppStateType} from '../../../Redux/store'
+import {requestUsers, follow, unfollow} from '../../../Redux/users-reducer'
 import React from 'react'
 import Users from './Users'
 import Preloader from '../../common/Preloader/Preloader'
-// import {WithAuthRedirect} from '../../../hoc/withAuthRedirect'
 import {compose} from 'redux'
 import {
     getUsers,
@@ -13,6 +12,7 @@ import {
     getCurrentPage,
     getIsFollowingProgress, getIsFetching
 } from '../../../Redux/Users-selectors'
+import {UserDataType} from "../../../API/api";
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
 
